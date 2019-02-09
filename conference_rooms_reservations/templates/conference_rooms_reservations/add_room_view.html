@@ -1,0 +1,18 @@
+{% extends 'conference_rooms_reservations/layout.html' %}
+{% block conf_room_reservations %}
+        <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h2>Please provide new room details:</h2>
+                    <form action="{% url 'add_room' %}" method="POST">
+                        {% csrf_token %}
+                        {{ new_room_form.as_p }}
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock conf_room_reservations %}
