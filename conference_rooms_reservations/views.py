@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import NewRoomForm, NewReservationForm
 from django.contrib import messages
-from django.views.generic import DetailView
+from django.views.generic import View
 from .models import Room, Reservation
+from datetime import datetime
 
 
-def layout(request):
-    return redirect('/address')
+class Layout(View):
+    def get(self, request):
+        return redirect('conference_rooms_reservations:all_rooms')
 
 
-class AddRoom(DetailView):
+class AddRoom(View):
     form_class = NewRoomForm
     template = 'conference_rooms_reservations/add_room_view.html'
 
@@ -20,38 +22,43 @@ class AddRoom(DetailView):
             messages.success(request, 'Room created successfully')
         else:
             messages.error(request, 'Room already exist!')
-        return redirect('/address')
+        return redirect('conference_rooms_reservations:all_rooms')
 
     def get(self, request):
         new_room_form = self.form_class
-        return render(request, self.template, {'new_room_form': new_room_form})
+        return render(request, self.template, locals())
 
 
-class AllRooms(DetailView):
+class AllRooms(View):
     template = 'conference_rooms_reservations/all_rooms_view.html'
 
     def get(self, request):
-        rooms = Room.objects.all()
-        return render(request, self.template, {'rooms': rooms})
+        rooms = Room.objects.select_related()
+        date_now = datetime.now().date()
+        reserved_today = []
+        for item in rooms:
+            for reservation in item.reservation_set.all():
+                if reservation.date == date_now:
+                    reserved_today.append(item.name)
+        return render(request, self.template, locals())
 
-
-class DeleteRoom(DetailView):
+class DeleteRoom(View):
 
     def get(self, request, **kwargs):
         instance = Room.objects.get(pk=self.kwargs['id'])
         instance.delete()
         messages.error(request, 'Room deleted successfully')
-        return redirect('/address')
+        return redirect('conference_rooms_reservations:all_rooms')
 
 
-class ModifyRoom(DetailView):
+class ModifyRoom(View):
     template = 'conference_rooms_reservations/modify_room.html'
     form = NewRoomForm
 
     def get(self, request, id):
         instance = Room.objects.get(pk=id)
         filled_form = self.form(instance=instance)
-        return render(request, self.template, {'form': filled_form, 'id': id})
+        return render(request, self.template, locals())
 
     def post(self, request, id):
         instance = Room.objects.get(pk=id)
@@ -59,35 +66,35 @@ class ModifyRoom(DetailView):
         if full_form.is_valid():
             full_form.save()
             messages.success(request, 'Room modified successfully')
-        return redirect('/address')
+        return redirect('conference_rooms_reservations:all_rooms')
 
 
-class ReservationView(DetailView):
+class ReservationView(View):
     form_class = NewReservationForm
     template = 'conference_rooms_reservations/reservations.html'
 
-    def post(self, request, id):
+    def get(self, request, id):
         initial = Room.objects.values('name').get(pk=id)
         new_reservation_form = self.form_class(initial=initial)
-        return render(request, self.template, {'new_reservation_form': new_reservation_form, 'room': initial})
+        return render(request, self.template, locals())
 
 
-class AddReservation(DetailView):
+class AddReservation(View):
     form_class = NewReservationForm
 
     def post(self, request):
         full_form = self.form_class(request.POST)
         if full_form.is_valid():
             full_form.save()
-            messages.success(request, 'Room created successfully')
-            return redirect('/address')
+            messages.success(request, 'Room reserved successfully')
+            return redirect('conference_rooms_reservations:all_rooms')
         else:
             messages.error(request,
-                           'Sala jest już zarezerwowana na tą date lub sprawdź czy nie wybrałeś daty z przeszłości.')
-            return redirect('/reservation')
+                           'Room already bookeed. Check if the date is not in the past!')
+            return redirect('conference_rooms_reservations:reserve_room_view', id=full_form.cleaned_data['room'].id)
 
 
-class RoomSearch(DetailView):
+class RoomSearch(View):
     form_class_reservations = NewReservationForm
     form_class_room = NewRoomForm
     template = 'conference_rooms_reservations/room_search.html'
@@ -103,14 +110,13 @@ class RoomSearch(DetailView):
         empty_reservations = self.form_class_reservations
         empty_room = self.form_class_room
         room_name = request.POST.get('name').capitalize()
-        room_capacity = request.POST.get('capacity')
-        room_date = request.POST.get('date')
+        room_capacity = request.POST.get('capacity', default=0)
+        room_date = request.POST.get('date', default=datetime.now().date())
         room_projector = request.POST.get('projector')
 
-        global output, filter_by, reserve
+        global output, reserve
         output = Reservation.objects.select_related()
         reserve = False
-        filter_by = []
 
         room_list = [item.name for item in Room.objects.select_related()]
         if room_name not in room_list:
@@ -122,20 +128,19 @@ class RoomSearch(DetailView):
             })
         else:
             if room_name is not None:
-                output.filter(room__name=room_name)
+                output = output.filter(room__name=room_name)
             if room_capacity is not None:
-                output.filter(room__capacity__gte=room_capacity)
+                output = output.filter(room__capacity__gte=room_capacity)
             if room_projector is not None:
                 if request.POST['projector'] == 'on':
                     output = output.filter(room__projector=True)
                 else:
                     output = output.filter(room__projector=False)
             if room_date is not None:
-                output.filter(date=room_date)
+                output = output.filter(date=room_date)
             if len(output) == 0:
                 return render(request, self.template, {
                     'output': f'BRAK wolnych sal dla podanych kryteriów wyszukiwania',
-                    'filter_by': filter_by,
                     'form_reservations': empty_reservations,
                     'form_room': empty_room,
                     'reserve': reserve,
@@ -144,7 +149,6 @@ class RoomSearch(DetailView):
                 reserve = True
                 return render(request, self.template, {
                     'output': f'Sala {room_name} jest wolna w podanym terminie',
-                    'filter_by': filter_by,
                     'form_reservations': empty_reservations,
                     'form_room': empty_room,
                     'reserve': reserve,

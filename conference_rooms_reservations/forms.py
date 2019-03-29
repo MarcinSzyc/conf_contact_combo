@@ -14,5 +14,5 @@ class NewReservationForm(ModelForm):
         model = Reservation
         exclude = []
         widgets = {
-            'date': DateInput()
+            'date': DateInput(attrs={'type': 'date'})
         }

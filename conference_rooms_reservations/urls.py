@@ -16,17 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from conference_rooms_reservations.views import (
-    layout, AddRoom, AllRooms, ModifyRoom, DeleteRoom,
-    AddReservation, ReservationView, RoomSearch)
+    AddRoom, AllRooms, ModifyRoom, DeleteRoom,
+    AddReservation, ReservationView, RoomSearch, Layout)
+
+app_name = "conference_rooms_reservations"
 
 urlpatterns = [
-    path('', layout, name='home'),
-    path('home/', layout, name='home'),
+    path('', Layout.as_view(), name='layout'),
     path('room/add', AddRoom.as_view(), name='add_room'),
     path('room/modify/<int:id>', ModifyRoom.as_view(), name='modify_room'),
     path('room/delete/<int:id>', DeleteRoom.as_view(), name='delete_room'),
     path('address/', AllRooms.as_view(), name='all_rooms'),
     path('reservation/<int:id>', ReservationView.as_view(), name='reserve_room_view'),
     path('reservation/', AddReservation.as_view(), name='add_reservation'),
-    path('search/', RoomSearch.as_view(), name='room_search')
+    path('search/', RoomSearch.as_view(), name='room_search'),
 ]

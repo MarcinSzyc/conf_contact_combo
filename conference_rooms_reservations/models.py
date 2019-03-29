@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from datetime import datetime
 
 
 def validate_date(date):
@@ -10,7 +11,7 @@ def validate_date(date):
 
 class Room(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    capacity = models.IntegerField(blank=False)
+    capacity = models.IntegerField(blank=False, default=0)
     projector = models.BooleanField(blank=True)
 
     def __str__(self):
@@ -18,7 +19,7 @@ class Room(models.Model):
 
 
 class Reservation(models.Model):
-    date = models.DateField(blank=False, unique=True, validators=[validate_date])
+    date = models.DateField(blank=False, default=datetime.now().date(), validators=[validate_date])
     comment = models.TextField()
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING, blank=False)
 
