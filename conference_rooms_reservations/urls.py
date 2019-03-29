@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from conference_rooms_reservations.views import (
     AddRoom, AllRooms, ModifyRoom, DeleteRoom,
-    AddReservation, ReservationView, RoomSearch, Layout)
+    AddReservation, ReservationView, RoomSearch, Layout, InfoView)
 
 app_name = "conference_rooms_reservations"
 
@@ -26,6 +26,7 @@ urlpatterns = [
     path('room/add', AddRoom.as_view(), name='add_room'),
     path('room/modify/<int:id>', ModifyRoom.as_view(), name='modify_room'),
     path('room/delete/<int:id>', DeleteRoom.as_view(), name='delete_room'),
+    path('room/info/<int:id>', InfoView.as_view(), name='info_view'),
     path('address/', AllRooms.as_view(), name='all_rooms'),
     path('reservation/<int:id>', ReservationView.as_view(), name='reserve_room_view'),
     path('reservation/', AddReservation.as_view(), name='add_reservation'),

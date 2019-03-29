@@ -34,20 +34,20 @@
                                     <td class="table-success">Free</td>
                                 {% endif %}
                                 <td>
-                                    <form action="{% url 'conference_rooms_reservations:reserve_room_view' id=item.id %}" method="GET"
-                                          style=" display: inline;">
+                                    <form action="{% url 'conference_rooms_reservations:reserve_room_view' id=item.id %}" method="GET">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-outline-success btn-sm">Reserve</button>
                                     </form>
-                                    <form action="{% url 'conference_rooms_reservations:modify_room' id=item.id %}" method="GET"
-                                          style="display: inline;">
-                                        {# <input type="hidden" name="id" value="{{ item.id }}">#}
+                                    <form action="{% url 'conference_rooms_reservations:modify_room' id=item.id %}" method="GET">
                                         <button type="submit" class="btn btn-outline-warning btn-sm">Modify</button>
                                     </form>
-                                    <form action="{% url 'conference_rooms_reservations:delete_room' id=item.id %}" method="GET"
-                                          style=" display: inline;">
+                                    <form action="{% url 'conference_rooms_reservations:delete_room' id=item.id %}" method="GET">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                    </form>
+                                    <form action="{% url 'conference_rooms_reservations:info_view' id=item.id %}" method="GET">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-info btn-sm">Info</button>
                                     </form>
                                 </td>
                             </tr>

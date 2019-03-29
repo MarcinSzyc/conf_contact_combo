@@ -42,6 +42,7 @@ class AllRooms(View):
                     reserved_today.append(item.name)
         return render(request, self.template, locals())
 
+
 class DeleteRoom(View):
 
     def get(self, request, **kwargs):
@@ -67,6 +68,16 @@ class ModifyRoom(View):
             full_form.save()
             messages.success(request, 'Room modified successfully')
         return redirect('conference_rooms_reservations:all_rooms')
+
+
+class InfoView(View):
+    template = 'conference_rooms_reservations/info_view.html'
+    form = NewRoomForm
+
+    def get(self, request, id):
+        instance = Room.objects.get(pk=id)
+        reservation = Reservation.objects.all().filter(room_id=id)
+        return render(request, self.template, locals())
 
 
 class ReservationView(View):

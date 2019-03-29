@@ -1,0 +1,57 @@
+{% extends 'conference_rooms_reservations/layout.html' %}
+{% block conf_room_reservations %}
+    <div class="row mb-2">
+        <div class="col-md-4">
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h2>Room details:</h2>
+                        <table class="table">
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ instance.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Capacity</th>
+                                <td>{{ instance.capacity }}</td>
+                            </tr>
+                            <tr>
+                                <th>Projector</th>
+                                <td>{{ instance.projector }}</td>
+                            </tr>
+                            <tr>
+                                <th>Actions</th>
+                                <td>
+                                    <form action="{% url 'conference_rooms_reservations:modify_room' id=id %}" method="GET">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-warning btn-sm">Modify</button>
+                                    </form>
+                                    <form action="{% url 'conference_rooms_reservations:reserve_room_view' id=id %}" method="GET">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Reserve</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h2>Reservations:</h2>
+                    {% for item in reservation %}
+                        <p>{{ item.date }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock conf_room_reservations %}

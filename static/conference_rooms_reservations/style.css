@@ -13,6 +13,13 @@ p {
     padding: 2px;
 }
 
+th, td {
+    text-align: center;
+}
+
+form {
+    display: inline;
+}
 
 .container {
     margin-top: 20px;
