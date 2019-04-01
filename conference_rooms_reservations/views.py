@@ -109,58 +109,92 @@ class RoomSearch(View):
     form_class_reservations = NewReservationForm
     form_class_room = NewRoomForm
     template = 'conference_rooms_reservations/room_search.html'
+    global output
 
     def get(self, request):
         empty_reservations = self.form_class_reservations
         empty_room = self.form_class_room
-        return render(request, self.template,
-                      {'form_reservations': empty_reservations,
-                       'form_room': empty_room})
+        return render(request, self.template, locals())
 
     def post(self, request):
+        control = True
         empty_reservations = self.form_class_reservations
         empty_room = self.form_class_room
-        room_name = request.POST.get('name').capitalize()
+        room_name = request.POST.get('name')
         room_capacity = request.POST.get('capacity', default=0)
         room_date = request.POST.get('date', default=datetime.now().date())
         room_projector = request.POST.get('projector')
 
-        global output, reserve
-        output = Reservation.objects.select_related()
-        reserve = False
+        print(room_date)
 
-        room_list = [item.name for item in Room.objects.select_related()]
-        if room_name not in room_list:
-            return render(request, self.template, {
-                'output': f'Sala {room_name} NIE ISTNIEJE, spróbuj jeszcze raz!',
-                'form_reservations': empty_reservations,
-                'form_room': empty_room,
-                'reserve': reserve,
-            })
+        output = Room.objects.select_related()
+
+
+
+        if room_name.upper() in [item.name.upper() for item in output]:
+            output = output.filter(name=room_name.capitalize())
+            message = "Pokój znaleziony"
+        elif room_name == '':
+            output = output
+            message = "Wszystkie pokoje"
         else:
-            if room_name is not None:
-                output = output.filter(room__name=room_name)
-            if room_capacity is not None:
-                output = output.filter(room__capacity__gte=room_capacity)
-            if room_projector is not None:
-                if request.POST['projector'] == 'on':
-                    output = output.filter(room__projector=True)
-                else:
-                    output = output.filter(room__projector=False)
-            if room_date is not None:
-                output = output.filter(date=room_date)
-            if len(output) == 0:
-                return render(request, self.template, {
-                    'output': f'BRAK wolnych sal dla podanych kryteriów wyszukiwania',
-                    'form_reservations': empty_reservations,
-                    'form_room': empty_room,
-                    'reserve': reserve,
-                })
-            else:
-                reserve = True
-                return render(request, self.template, {
-                    'output': f'Sala {room_name} jest wolna w podanym terminie',
-                    'form_reservations': empty_reservations,
-                    'form_room': empty_room,
-                    'reserve': reserve,
-                })
+            message = "Room with this name does not exist!!"
+
+        if room_capacity is not None:
+            output = output.filter(capacity__gte=room_capacity)
+
+        if room_projector == 'on':
+            output = output.filter(projector=True)
+        else:
+            output = output.filter(projector=False)
+
+        for item in output:
+            for reservation in item.reservation_set.all():
+                if str(reservation.date) == str(room_date):
+                    output = output.exclude(name=item.name)
+
+        return render(request, self.template, locals())
+
+
+        # OLD
+        #
+        # global output, reserve
+        # output = Reservation.objects.select_related()
+        # reserve = False
+        #
+        # room_list = [item.name.upper() for item in Room.objects.select_related()]
+        #
+        # if room_name not in room_list:
+        #     if room_name == '':
+        #         output = output
+        #     else:
+        #         return render(request, self.template, {
+        #             'message': f'Sala {room_name} NIE ISTNIEJE, spróbuj jeszcze raz!',
+        #             'empty_reservations': empty_reservations,
+        #             'empty_room': empty_room,
+        #             'reserve': reserve,
+        #         })
+        # else:
+        #     output = output.filter(room__name=room_name)
+        #     output = output.filter(room__capacity__gte=room_capacity)
+        #     output = output.filter(date=room_date)
+        #     if room_projector == 'on':
+        #         output = output.filter(room__projector=True)
+        #     else:
+        #         output = output.filter(room__projector=False)
+        #     if len(output) == 0:
+        #         return render(request, self.template, {
+        #             'message': f'BRAK wolnych sal dla podanych kryteriów wyszukiwania',
+        #             'empty_reservations': empty_reservations,
+        #             'empty_room': empty_room,
+        #             'reserve': reserve,
+        #         })
+        #     else:
+        #         reserve = True
+        #         return render(request, self.template, {
+        #             'message': f'Sala {room_name} jest wolna w podanym terminie',
+        #             'empty_reservations': empty_reservations,
+        #             'empty_room': empty_room,
+        #             'reserve': reserve,
+        #             'output': output,
+        #         })

@@ -8,13 +8,13 @@
                     <form action="{% url 'conference_rooms_reservations:room_search' %}" method="POST" novalidate>
                         {% csrf_token %}
                         Room name:
-                        <p>{{ form_room.name }}</p>
+                        <p>{{ empty_room.name }}</p>
                         Room min. capacity:
-                        <p>{{ form_room.capacity }}</p>
+                        <p>{{ empty_room.capacity }}</p>
                         Room available date:
-                        <p>{{ form_reservations.date}}</p>
+                        <p>{{ empty_reservations.date}}</p>
                         Projector in the room?
-                        <p>{{ form_room.projector }}</p>
+                        <p>{{ empty_room.projector }}</p>
                         <button type="submit" class="btn btn-secondary">Search</button>
                     </form>
                 </div>
@@ -23,14 +23,32 @@
         <div class="col-md-6">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
                 <div class="card-body d-flex flex-column align-items-start">
-                    {% if reserve %}
-                        <p>{{ output }}</p>
-                        <form action="{% url 'conference_rooms_reservations:all_rooms' %}" method="POST"
-                              style="display: inline;">
-                            <button type="submit" class="btn btn-outline-success btn-sm">Go to Reservation View</button>
-                        </form>
-                    {% else %}
-                        <p>{{ output }}</p>
+                        <h2>Rooms which fulfill criteria:</h2>
+
+                        <table>
+                        <tr>
+                            <th>Room name:</th>
+                            <th>Action:</th>
+                        </tr>
+                            {% for item in output.all %}
+                                <tr>
+                                    <td>{{ item }}</td>
+                                    <td><a style="align-content: end" class="btn btn-outline-success btn-sm"
+                                           href="{% url 'conference_rooms_reservations:reserve_room_view' id=item.id %}">Reserve</a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+
+                </div>
+            </div>
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h6>Search criteria:</h6>
+                    {% if control %}
+                        <p>Name: {{ room_name }}</p>
+                        <p>Capacity: {{ room_capacity }}</p>
+                        <p>Date: {{ room_date }}</p>
+                        <p>Projector: {{ room_projector }}</p>
                     {% endif %}
                 </div>
             </div>
