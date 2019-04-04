@@ -19,7 +19,7 @@ class Room(models.Model):
 
 
 class Reservation(models.Model):
-    date = models.DateField(blank=False, default=datetime.now().date(), validators=[validate_date])
+    date = models.DateField(blank=False, validators=[validate_date])
     comment = models.TextField()
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING, blank=False)
 

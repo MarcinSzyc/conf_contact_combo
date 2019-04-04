@@ -1,9 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import NewRoomForm, NewReservationForm
 from django.contrib import messages
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from .models import Room, Reservation
 from datetime import datetime
+
+
+class Home(View):
+    template = 'conference_rooms_reservations/main_page.html'
+
+    def get(self, request):
+        return render(request, self.template)
 
 
 class Layout(View):
@@ -85,8 +92,8 @@ class ReservationView(View):
     template = 'conference_rooms_reservations/reservations.html'
 
     def get(self, request, id):
-        initial = Room.objects.values('name').get(pk=id)
-        new_reservation_form = self.form_class(initial=initial)
+        initial = Room.objects.get(pk=id)
+        new_reservation_form = self.form_class(initial={'room': initial, 'date': datetime.today().date()})
         return render(request, self.template, locals())
 
 
@@ -96,13 +103,18 @@ class AddReservation(View):
     def post(self, request):
         full_form = self.form_class(request.POST)
         if full_form.is_valid():
-            full_form.save()
-            messages.success(request, 'Room reserved successfully')
-            return redirect('conference_rooms_reservations:all_rooms')
+            room_id = full_form.cleaned_data['room'].id
+            all_reservations = [item.date for item in Reservation.objects.all().filter(room_id=room_id)]
+            if full_form.cleaned_data["date"] in all_reservations:
+                messages.error(request, 'Room already booked. Try different date or change room!')
+                return redirect('conference_rooms_reservations:reserve_room_view', id=room_id)
+            else:
+                full_form.save()
+                messages.success(request, 'Room reserved successfully')
+                return redirect('conference_rooms_reservations:all_rooms')
         else:
-            messages.error(request,
-                           'Room already bookeed. Check if the date is not in the past!')
-            return redirect('conference_rooms_reservations:reserve_room_view', id=full_form.cleaned_data['room'].id)
+            messages.error(request, f'Invalid data or date is in the past!')
+            return redirect('conference_rooms_reservations:reserve_room_view', id=request.POST['room'])
 
 
 class RoomSearch(View):
@@ -129,8 +141,6 @@ class RoomSearch(View):
 
         output = Room.objects.select_related()
 
-
-
         if room_name.upper() in [item.name.upper() for item in output]:
             output = output.filter(name=room_name.capitalize())
             message = "Pokój znaleziony"
@@ -154,7 +164,6 @@ class RoomSearch(View):
                     output = output.exclude(name=item.name)
 
         return render(request, self.template, locals())
-
 
         # OLD
         #
