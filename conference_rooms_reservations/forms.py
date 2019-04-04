@@ -1,5 +1,4 @@
 from django.forms import ModelForm, DateInput
-from django import forms
 from conference_rooms_reservations.models import Room, Reservation
 
 

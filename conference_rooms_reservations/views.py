@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from .forms import NewRoomForm, NewReservationForm
 from django.contrib import messages
-from django.views.generic import View, TemplateView
+from django.views.generic import View
 from .models import Room, Reservation
 from datetime import datetime
 
 
+# Main page view
 class Home(View):
     template = 'conference_rooms_reservations/main_page.html'
 
@@ -13,11 +14,13 @@ class Home(View):
         return render(request, self.template)
 
 
+# Conference reservation main page view
 class Layout(View):
     def get(self, request):
         return redirect('conference_rooms_reservations:all_rooms')
 
 
+# Class view to show Add Room form and to accept data
 class AddRoom(View):
     form_class = NewRoomForm
     template = 'conference_rooms_reservations/add_room_view.html'
@@ -36,6 +39,7 @@ class AddRoom(View):
         return render(request, self.template, locals())
 
 
+# Class view to show All Rooms
 class AllRooms(View):
     template = 'conference_rooms_reservations/all_rooms_view.html'
 
@@ -50,6 +54,7 @@ class AllRooms(View):
         return render(request, self.template, locals())
 
 
+# Class view to process Delete Room request
 class DeleteRoom(View):
 
     def get(self, request, **kwargs):
@@ -59,6 +64,7 @@ class DeleteRoom(View):
         return redirect('conference_rooms_reservations:all_rooms')
 
 
+# Class view to show and process Modify Room request
 class ModifyRoom(View):
     template = 'conference_rooms_reservations/modify_room.html'
     form = NewRoomForm
@@ -77,6 +83,7 @@ class ModifyRoom(View):
         return redirect('conference_rooms_reservations:all_rooms')
 
 
+# Class view to show detailed info about Room
 class InfoView(View):
     template = 'conference_rooms_reservations/info_view.html'
     form = NewRoomForm
@@ -87,6 +94,7 @@ class InfoView(View):
         return render(request, self.template, locals())
 
 
+# Class view to show Room Reservation form
 class ReservationView(View):
     form_class = NewReservationForm
     template = 'conference_rooms_reservations/reservations.html'
@@ -97,6 +105,7 @@ class ReservationView(View):
         return render(request, self.template, locals())
 
 
+# Class view to process new Room Reservation
 class AddReservation(View):
     form_class = NewReservationForm
 
@@ -117,6 +126,7 @@ class AddReservation(View):
             return redirect('conference_rooms_reservations:reserve_room_view', id=request.POST['room'])
 
 
+# Class view to show and process Room Search
 class RoomSearch(View):
     form_class_reservations = NewReservationForm
     form_class_room = NewRoomForm
