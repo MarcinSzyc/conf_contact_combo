@@ -16,13 +16,15 @@
                     <h2>Please provide new reservation details:</h2>
                     <form action="{% url 'conference_rooms_reservations:add_reservation' %}" method="POST">
                         {% csrf_token %}
-                        Room
-                        <p>{{ new_reservation_form.room }}</p>
-                        Date (yyyy-mm-dd)
-                        <p>{{ new_reservation_form.date }}</p>
-                        Comment:
-                        <p>{{ new_reservation_form.comment }}</p>
-                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <div class="col-auto my-1">
+                            <label for="room-name">Room name:</label>
+                            <p id="room-name">{{ new_reservation_form.room }}</p>
+                            <label for="date">Reservation date:</label>
+                            <p id="date" class="form-inline">{{ new_reservation_form.date }}</p>
+                            <label for="comment">Comment:</label>
+                            <p id="comment">{{ new_reservation_form.comment }}</p>
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
                     </form>
                 </div>
             </div>

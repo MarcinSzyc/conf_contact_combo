@@ -134,29 +134,28 @@ class RoomSearch(View):
     global output
 
     def get(self, request):
-        empty_reservations = self.form_class_reservations
+        empty_reservations = self.form_class_reservations(initial={'date': datetime.today().date()})
         empty_room = self.form_class_room
         return render(request, self.template, locals())
 
     def post(self, request):
         control = True
-        empty_reservations = self.form_class_reservations
+        empty_reservations = self.form_class_reservations(initial={'date': datetime.today().date()})
         empty_room = self.form_class_room
         room_name = request.POST.get('name')
         room_capacity = request.POST.get('capacity', default=0)
-        room_date = request.POST.get('date', default=datetime.now().date())
+        date_day = int(request.POST.get('date_day'))
+        date_month = int(request.POST.get('date_month'))
+        date_year = int(request.POST.get('date_year'))
+        room_date = datetime(year=date_year, day=date_day, month=date_month).date()
         room_projector = request.POST.get('projector')
-
-        print(room_date)
 
         output = Room.objects.select_related()
 
         if room_name.upper() in [item.name.upper() for item in output]:
             output = output.filter(name=room_name.capitalize())
-            message = "Pokój znaleziony"
         elif room_name == '':
             output = output
-            message = "Wszystkie pokoje"
         else:
             message = "Room with this name does not exist!!"
 
@@ -170,7 +169,7 @@ class RoomSearch(View):
 
         for item in output:
             for reservation in item.reservation_set.all():
-                if str(reservation.date) == str(room_date):
+                if reservation.date == room_date:
                     output = output.exclude(name=item.name)
 
         return render(request, self.template, locals())
