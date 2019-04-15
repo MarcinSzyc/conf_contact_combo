@@ -19,7 +19,7 @@ from django.urls import path, include
 from conference_rooms_reservations.views import *
 
 urlpatterns = [
-    path('', Home.as_view()),
+    path('', Home.as_view(), name="Home"),
     path('conf_rooms_reservations/', include('conference_rooms_reservations.urls')),
-    path('user_stories/', include('user_stories.urls')),
+    path('contact_box/', include('contact_box.urls')),
 ]

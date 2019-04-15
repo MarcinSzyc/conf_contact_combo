@@ -157,7 +157,7 @@ class RoomSearch(View):
         elif room_name == '':
             output = output
         else:
-            message = "Room with this name does not exist!!"
+            messages.error(request, "Room with this name does not exist!!")
 
         if room_capacity is not None:
             output = output.filter(capacity__gte=room_capacity)

@@ -20,7 +20,7 @@
 <body background="{% static 'images/background-cement-concrete-242236.jpg' %}">
 <div class="container">
     <div class="conf_room btn btn-outline-info btn-sm">Conference Room Reservations</div>
-    <div class="user_stories btn btn-outline-info btn-sm">User Stories</div>
+    <div class="user_stories btn btn-outline-info btn-sm">Contact Box</div>
 </div>
 
 <script>
@@ -39,14 +39,26 @@
         conf_room()
     })
 
+    function user_stories() {
+        let zapytanie = $.ajax({
+                    url: `http://localhost:8000/contact_box/`,
+                    type: "GET",
+                    dataType: "json"
+                }).always(function () {
+                    window.location.href = '../../contact_box/'
+                })
+
+        return zapytanie
+    }
+    $('.user_stories').click(function () {
+        user_stories()
+    })
+
 </script>
 
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-{#<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"#}
-{#        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"#}
-{#        crossorigin="anonymous"></script>#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>

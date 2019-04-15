@@ -20,7 +20,7 @@ class Room(models.Model):
 class Reservation(models.Model):
     date = models.DateField(blank=False, validators=[validate_date])
     comment = models.TextField()
-    room = models.ForeignKey(Room, on_delete=models.DO_NOTHING, blank=False)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
         return f"{self.room} {self.date}"

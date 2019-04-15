@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'conference_rooms_reservations',
-    'user_stories',
+    'contact_box',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +130,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+FAKER_LOCALE = None
+FAKER_PROVIDERS = None

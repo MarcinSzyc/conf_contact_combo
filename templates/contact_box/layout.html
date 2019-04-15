@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User_stories</title>
+    <title>Contact Box</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'user_stories/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'contact_box/style.css' %}">
 
 
 </head>
 <body>
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel">
-        <a class="navbar-brand" href="{% url 'person_all' %}">Home</a>
+        <a class="navbar-brand" href="{% url 'Home' %}">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
                 aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,14 +28,20 @@
         <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'person_all' %}">Show all people</a>
+                    <a class="nav-link" href="{% url 'contact_box:person_all' %}">Show all people</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'new_person' %}">New Person</a>
+                    <a class="nav-link" href="{% url 'contact_box:new_person' %}">New Person</a>
                 </li>
-{#                <li class="nav-item active">#}
-{#                    <a class="nav-link" href="{% url 'room_search' %}">Room Search</a>#}
-{#                </li>#}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contact_box:new_email' %}">New Email</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contact_box:new_address' %}">New Address</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contact_box:new_phone_number' %}">New Phone Number</a>
+                </li>
             </ul>
         </div>
     </nav>

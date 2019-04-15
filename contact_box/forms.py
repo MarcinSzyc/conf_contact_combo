@@ -1,10 +1,13 @@
-from django.forms import ModelForm, DateInput
-from user_stories.models import Person, Address, Email, PhoneNumber
+from django.forms import ModelForm, DateInput, Textarea
+from contact_box.models import Person, Address, Email, PhoneNumber
 
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
+        widgets = {
+            'description': Textarea(attrs={'rows': 5, 'cols': 20}),
+        }
         exclude = []
 
 
