@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Person, Address, Email, PhoneNumber
-from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm
+from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm
 from django.contrib import messages
 
 
@@ -107,3 +107,20 @@ class NewPhoneNumber(View):
         else:
             messages.error(request, 'Upps, something went wrong!!!')
         return redirect('contact_box:new_phone_number')
+
+
+class NewGroup(View):
+    template = 'contact_box/new_group_view.html'
+
+    def get(self, request):
+        empty_group = GroupForm
+        return render(request, self.template, locals())
+
+    def post(self, request):
+        filled_form = GroupForm(request.POST)
+        if filled_form.is_valid():
+            filled_form.save()
+            messages.success(request, 'Group created successfully!!!')
+        else:
+            messages.error(request, 'Upps, something went wrong!!!')
+        return redirect('contact_box:new_group')

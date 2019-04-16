@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from contact_box.models import Person, Address, Email, PhoneNumber
+from contact_box.models import Person, Address, Email, PhoneNumber, Group
 
 
 class PersonForm(ModelForm):
@@ -26,4 +26,9 @@ class EmailForm(ModelForm):
 class PhoneNumberForm(ModelForm):
     class Meta:
         model = PhoneNumber
+        exclude = []
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = Group
         exclude = []
