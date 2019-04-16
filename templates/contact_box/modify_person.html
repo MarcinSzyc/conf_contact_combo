@@ -22,11 +22,16 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <form action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
+                                    <form class="person-form" data-id="{{ person_instance.id }}" action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
                                         {% csrf_token %}
-                                        <table class="table">
-                                            {{ pre_filled_person_form.as_p }}
-                                        </table>
+                                        <label for="person-name">First name:</label>
+                                        <p id="person-name">{{ pre_filled_person_form.name }}</p>
+                                        <label for="person-last-name">Last name:</label>
+                                        <p id="person-last-name">{{ pre_filled_person_form.last_name }}</p>
+                                        <label for="person-description">Person:</label>
+                                        <p id="person-description">{{ pre_filled_person_form.description }}</p>
+                                        <label for="person-address">Person:</label>
+                                        <p id="person-address">{{ pre_filled_person_form.address }}</p>
                                         <button type="submit" class="btn btn-secondary">Save</button>
                                     </form>
                                 </td>
@@ -131,9 +136,9 @@
                                 {% csrf_token %}
                                 <table class="table">
                                     <label for="person-name">Name:</label>
-                                    <p id="person-name">{{ add_group.name }}</p>
+                                    <p id="group-name">{{ add_group.name }}</p>
                                     <label for="person-name">Person:</label>
-                                    <p id="person-name">{{ add_group.person }}</p>
+                                    <p id="group-person-name">{{ add_group.person }}</p>
                                 </table>
                                 <button type="submit" class="btn btn-secondary">Save</button>
                             </form>
@@ -142,7 +147,7 @@
                 </div>
                 `);
 
-            function add_phone_box(type, card) {
+            function add_box(type, card) {
                 console.log("dupa")
                 var main_window = $(".main-window")
                 if (main_window.hasClass(type)) {
@@ -155,14 +160,18 @@
             }
 
             $(".person-buttons > a:link").click(function (e) {
+                var person_id = $(".person-form").data("id")
                 if ($(this).data("name") === "phone") {
-                    add_phone_box("phone", phone_card);
+                    add_box("phone", phone_card);
+                    $("#phone-person-name > select").val(person_id)
                     e.preventDefault()
                 } else if ($(this).data("name") === "email") {
-                    add_phone_box("email", email_card);
+                    add_box("email", email_card);
+                    $("#email-person-name > select").val(person_id)
                     e.preventDefault()
                 } else {
-                    add_phone_box("group", group_card);
+                    add_box("group", group_card);
+                    $("#group-person-name > select").val(person_id)
                     e.preventDefault()
                 }
             })
