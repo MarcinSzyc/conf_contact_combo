@@ -10,125 +10,164 @@
         {% endfor %}
     {% endif %}
     <div class="row mb-2">
-        <div class="col-md-5">
+        <div class="col-md">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <div class="card-body d-flex flex-column align-items-center">
+                <div class="card-body d-flex flex-column align-items-right">
+                    <table class="table">
+                        <thead><h2 style="text-align: center">Person</h2></thead>
+                        <tbody>
+                            <tr>
+                                <th scope="col" style="text-align: center">Main data:</th>
+                                <th scope="col" style="text-align: center">Additional:</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <table class="table">
+                                            {{ pre_filled_person_form.as_p }}
+                                        </table>
+                                        <button type="submit" class="btn btn-secondary">Save</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <table class="table" style="display: inline">
+                                        <tr><th colspan="2">Emails:</th></tr>
+                                        {% for item in person_instance.email_set.all %}
+                                            <tr>
+                                                <td>{{ item }}</td>
+                                                <td><a href="{% url 'contact_box:delete_email' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                    <table class="table" style="display: inline">
+                                        <tr><th colspan="2">Phone numbers:</th></tr>
+                                        {% for item in person_instance.phonenumber_set.all %}
+                                            <tr>
+                                                <td>{{ item }}</td>
+                                                <td><a href="{% url 'contact_box:delete_phone' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                    <table class="table" style="display: inline">
+                                        <tr><th colspan="2">Groups:</th></tr>
+                                        {% for item in person_instance.group_set.all %}
+                                            <tr>
+                                                <td>{{ item }}</td>
+                                                <td><a href="{% url 'contact_box:delete_phone' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <div class="btn-group btn-group-sm person-buttons" role="group" aria-label="Small button group">
                         <a class="btn btn-info" data-id="{{ person_instance.id }}" data-name="phone"
-                                   style="float: right;" href="">Add Phone Number</a>
+                           style="float: right;" href="">Add Phone Number</a>
                         <a class="btn btn-info" data-id="{{ person_instance.id }}" data-name="email"
-                               style="float: right;" href="">Add Email Address</a>
+                           style="float: right;" href="">Add Email Address</a>
                         <a class="btn btn-info" data-id="{{ person_instance.id }}" data-name="group"
-                               style="float: right;" href="">Add Group</a>
+                           style="float: right;" href="">Add Group</a>
                     </div>
-                    <br>
-                    <h3 style="display:inline;">Person</h3>
-                    <script>
-                        $(document).ready(function() {
-                            let phone_card = $(`
-                                <div class="col-md phone-box">
-                                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                                        <div class="card-body d-flex flex-column align-items-start">
-                                            <h3>Add phone number</h3>
-                                            <form action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
-                                                {% csrf_token %}
-                                                <table class="table">
-                                                    <label for="phone-number">Phone number:</label>
-                                                    <p id="phone-number">{{ add_phone.phone_number }}</p>
-                                                    <label for="phone-type">Type:</label>
-                                                    <p id="phone-type">{{ add_phone.type }}</p>
-                                                    <label for="phone-person-name">Person:</label>
-                                                    <p id="phone-person-name">{{ add_phone.person }}</p>
-                                                </table>
-                                                <button type="submit" class="btn btn-secondary">Save</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                `);
-
-                            let email_card = $(`
-                                <div class="col-md email-box">
-                                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                                        <div class="card-body d-flex flex-column align-items-start">
-                                            <h3>Add email:</h3>
-                                            <form action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
-                                                {% csrf_token %}
-                                                <table class="table">
-                                                    <label for="email-address">Email address:</label>
-                                                    <p id="email-address">{{ add_email.email_address }}</p>
-                                                    <label for="email-type">Type:</label>
-                                                    <p id="email-type">{{ add_email.type }}</p>
-                                                    <label for="email-person-name">Person:</label>
-                                                    <p id="email-person-name">{{ add_email.person }}</p>
-                                                </table>
-                                                <button type="submit" class="btn btn-secondary">Save</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                `);
-
-                            let group_card = $(`
-                                <div class="col-md group-box">
-                                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                                        <div class="card-body d-flex flex-column align-items-start">
-                                            <h3>Add group:</h3>
-                                            <form action="{% url 'contact_box:new_group' %}" method="POST">
-                                                {% csrf_token %}
-                                                <table class="table">
-                                                    <label for="person-name">Name:</label>
-                                                    <p id="person-name">{{ add_group.name }}</p>
-                                                    <label for="person-name">Person:</label>
-                                                    <p id="person-name">{{ add_group.person }}</p>
-                                                </table>
-                                                <button type="submit" class="btn btn-secondary">Save</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                `);
-
-                            function add_phone_box(type, card) {
-                                console.log("dupa")
-                                var main_window = $(".main-window")
-                                if (main_window.hasClass(type)) {
-                                    $(`.${type}-box`).remove()
-                                    main_window.removeClass(type)
-                                } else {
-                                    main_window.append(card)
-                                    main_window.addClass(type)
-                                }
-                            }
-
-                            $(".person-buttons > a:link").click(function (e) {
-                                if ($(this).data("name")==="phone") {
-                                    add_phone_box("phone", phone_card);
-                                    e.preventDefault()
-                                } else if ($(this).data("name")==="email") {
-                                    add_phone_box("email", email_card);
-                                    e.preventDefault()
-                                } else {
-                                    add_phone_box("group", group_card);
-                                    e.preventDefault()
-                                }
-                            })
-                        });
-
-                    </script>
-                    <form action="{% url 'contact_box:modify_person_view' id=person_instance.id %}" method="POST">
-                        {% csrf_token %}
-                        <table class="table">
-                            {{ pre_filled_person_form.as_p }}
-                        </table>
-                        <button type="submit" class="btn btn-secondary">Save</button>
-                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="row mb-2 main-window"></div>
-        </div>
     </div>
+    <div class="row mb-2 main-window">
+    </div>
+    <script>
+        $(document).ready(function () {
+            let phone_card = $(`
+                <div class="col-md phone-box">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h3>Add phone number</h3>
+                            <form action="{% url 'contact_box:new_phone_number' %}" method="POST">
+                                {% csrf_token %}
+                                <table class="table">
+                                    <label for="phone-number">Phone number:</label>
+                                    <p id="phone-number">{{ add_phone.phone_number }}</p>
+                                    <label for="phone-type">Type:</label>
+                                    <p id="phone-type">{{ add_phone.type }}</p>
+                                    <label for="phone-person-name">Person:</label>
+                                    <p id="phone-person-name">{{ add_phone.person }}</p>
+                                </table>
+                                <button type="submit" class="btn btn-secondary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                `);
+
+            let email_card = $(`
+                <div class="col-md email-box">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h3>Add email:</h3>
+                            <form action="{% url 'contact_box:new_email' %}" method="POST">
+                                {% csrf_token %}
+                                <table class="table">
+                                    <label for="email-address">Email address:</label>
+                                    <p id="email-address">{{ add_email.email_address }}</p>
+                                    <label for="email-type">Type:</label>
+                                    <p id="email-type">{{ add_email.type }}</p>
+                                    <label for="email-person-name">Person:</label>
+                                    <p id="email-person-name">{{ add_email.person }}</p>
+                                </table>
+                                <button type="submit" class="btn btn-secondary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                `);
+
+            let group_card = $(`
+                <div class="col-md group-box">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h3>Add group:</h3>
+                            <form action="{% url 'contact_box:new_group' %}" method="POST">
+                                {% csrf_token %}
+                                <table class="table">
+                                    <label for="person-name">Name:</label>
+                                    <p id="person-name">{{ add_group.name }}</p>
+                                    <label for="person-name">Person:</label>
+                                    <p id="person-name">{{ add_group.person }}</p>
+                                </table>
+                                <button type="submit" class="btn btn-secondary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                `);
+
+            function add_phone_box(type, card) {
+                console.log("dupa")
+                var main_window = $(".main-window")
+                if (main_window.hasClass(type)) {
+                    $(`.${type}-box`).remove()
+                    main_window.removeClass(type)
+                } else {
+                    main_window.append(card)
+                    main_window.addClass(type)
+                }
+            }
+
+            $(".person-buttons > a:link").click(function (e) {
+                if ($(this).data("name") === "phone") {
+                    add_phone_box("phone", phone_card);
+                    e.preventDefault()
+                } else if ($(this).data("name") === "email") {
+                    add_phone_box("email", email_card);
+                    e.preventDefault()
+                } else {
+                    add_phone_box("group", group_card);
+                    e.preventDefault()
+                }
+            })
+        });
+
+    </script>
 
 {% endblock user_stories %}
