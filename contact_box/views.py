@@ -37,6 +37,7 @@ class ModifyPersonView(View):
         person_instance = Person.objects.get(pk=id)
         add_phone = PhoneNumberForm
         add_email = EmailForm
+        add_group = GroupForm
         pre_filled_person_form = PersonForm(instance=person_instance)
         return render(request, self.template, locals())
 
