@@ -13,7 +13,8 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{% static 'generic_styles.css' %}">
 
 </head>
@@ -26,30 +27,32 @@
 <script>
     function conf_room() {
         let zapytanie = $.ajax({
-                    url: `http://localhost:8000/conf_rooms_reservations/`,
-                    type: "GET",
-                    dataType: "json"
-                }).always(function () {
-                    window.location.href = 'http://localhost:8000/conf_rooms_reservations/'
-                })
+            url: `http://localhost:8000/conf_rooms_reservations/`,
+            type: "GET",
+            dataType: "json"
+        }).always(function () {
+            window.location.href = 'http://localhost:8000/conf_rooms_reservations/'
+        })
 
         return zapytanie
     }
+
     $('.conf_room').click(function () {
         conf_room()
     })
 
     function user_stories() {
         let zapytanie = $.ajax({
-                    url: `http://localhost:8000/contact_box/`,
-                    type: "GET",
-                    dataType: "json"
-                }).always(function () {
-                    window.location.href = '../../contact_box/'
-                })
+            url: `http://localhost:8000/contact_box/`,
+            type: "GET",
+            dataType: "json"
+        }).always(function () {
+            window.location.href = '../../contact_box/'
+        })
 
         return zapytanie
     }
+
     $('.user_stories').click(function () {
         user_stories()
     })
