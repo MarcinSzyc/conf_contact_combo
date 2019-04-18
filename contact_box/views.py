@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Person, Address, Email, PhoneNumber
-from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm
+from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm, UserLogin
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 
 class PersonAll(View):
@@ -26,7 +27,8 @@ class NewPerson(View):
             filled_form.save()
             messages.success(request, 'Person created successfully!!!')
         else:
-            messages.error(request, 'Upps, something went wrong!!!')
+            error_list = [item for item in filled_form.errors.values()]
+            messages.error(request, f'Upps, something went wrong!!! \n {error_list}')
         return redirect('contact_box:person_all')
 
 
@@ -145,6 +147,8 @@ class DeleteEmail(View):
         email_instance.delete()
         messages.error(request, 'Email address deleted successfully!!!')
         return redirect('contact_box:person_all')
+
+
 #
 class DeletePhone(View):
 
@@ -153,3 +157,35 @@ class DeletePhone(View):
         phone_instance.delete()
         messages.error(request, 'Phone number deleted successfully!!!')
         return redirect('contact_box:person_all')
+
+
+class Login(View):
+    template = 'conference_rooms_reservations/login_page.html'
+
+    def get(self, request):
+        empty_form = UserLogin
+        return render(request, self.template, locals())
+
+    def post(self, request):
+        filled_form = UserLogin(request.POST)
+        if filled_form.is_valid():
+            username = filled_form.cleaned_data.get('username')
+            password = filled_form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user:
+                messages.success(request, f'Witaj {user} !!')
+                login(request, user)
+                return redirect('login')
+            else:
+                messages.error(request, 'Nie ma takiego użytkownika!')
+                return redirect('login')
+        else:
+            messages.error(request, 'Upps coś poszło nie tak!')
+            return redirect('login')
+
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect('Home')

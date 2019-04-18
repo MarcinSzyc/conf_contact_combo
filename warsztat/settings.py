@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'warsztat.wsgi.application'
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
-        'NAME': 'conf_rooms_reservations',
+        'NAME': 'conference_contact_app',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
         'PASSWORD': 'coderslab',

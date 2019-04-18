@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateInput, Textarea
 from contact_box.models import Person, Address, Email, PhoneNumber, Group
+from django import forms
 
 
 class PersonForm(ModelForm):
@@ -28,7 +29,13 @@ class PhoneNumberForm(ModelForm):
         model = PhoneNumber
         exclude = []
 
+
 class GroupForm(ModelForm):
     class Meta:
         model = Group
         exclude = []
+
+
+class UserLogin(forms.Form):
+    username = forms.CharField(max_length=64)
+    password = forms.CharField(widget=forms.PasswordInput)

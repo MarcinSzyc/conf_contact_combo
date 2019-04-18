@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.urls import path, include
-from conference_rooms_reservations.views import *
+from conference_rooms_reservations.views import Home
+from contact_box.views import Login, Logout
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', Home.as_view(), name="Home"),
     path('conf_rooms_reservations/', include('conference_rooms_reservations.urls')),
     path('contact_box/', include('contact_box.urls')),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
 ]

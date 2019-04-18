@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from contact_box.views import \
-    PersonAll, NewPerson, ModifyPersonView, DeletePerson, \
-    NewEmail, NewAddress, NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail
+from contact_box.views import (PersonAll, NewPerson, ModifyPersonView, DeletePerson, NewEmail, NewAddress,
+                               NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail)
+
 # DeleteGroup, ,
 app_name = "contact_box"
 

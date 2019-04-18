@@ -1,23 +1,23 @@
 {% extends 'contact_box/layout.html' %}
 {% block user_stories %}
-    {% if messages %}
-        {% for message in messages %}
-            <div{% if message.tags == 'error' %}
-                class="alert alert-danger" role="alert"
-            {% else %}
-                class="alert alert-success" role="alert"
-            {% endif %}>{{ message }}</div>
-        {% endfor %}
-    {% endif %}
     <div class="row mb-2">
         <div class="col-md-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div{% if message.tags == 'error' %}
+                        class="alert alert-danger" role="alert"
+                    {% else %}
+                        class="alert alert-success" role="alert"
+                    {% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
                 <div class="card-body d-flex flex-column align-items-start">
-                    <h3>Person</h3>
-                    <form action="{% url 'contact_box:new_person' %}" method="POST">
+                    <h3>Provide your credentials:</h3>
+                    <form action="{% url 'login' %}" method="POST">
                         {% csrf_token %}
                         <table class="table">
-                            {{ empty_person.as_p }}
+                            {{ empty_form.as_p }}
 {#                            <label for="person-name">Name:</label>#}
 {#                            <p id="person-name">{{ empty_person.name }}</p>#}
 {#                            <label for="person-name">Last name:</label>#}
@@ -27,7 +27,7 @@
 {#                            <label for="person-name">Address:</label>#}
 {#                            <p id="person-name">{{ empty_person.address }}</p>#}
                         </table>
-                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <button type="submit" class="btn btn-secondary">Log me in !!</button>
                     </form>
                 </div>
             </div>
