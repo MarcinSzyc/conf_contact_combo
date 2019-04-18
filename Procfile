@@ -1,1 +1,1 @@
-web: gunicorn andzy.wsgi --log-file -
+web: gunicorn warsztat.wsgi --log-file -
