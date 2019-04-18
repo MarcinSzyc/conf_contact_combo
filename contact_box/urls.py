@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.urls import path
 from contact_box.views import (PersonAll, NewPerson, ModifyPersonView, DeletePerson, NewEmail, NewAddress,
-                               NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail)
+                               NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail, DeleteGroup)
 
-# DeleteGroup, ,
 app_name = "contact_box"
 
 urlpatterns = [
@@ -29,7 +28,7 @@ urlpatterns = [
     path('new_address/', NewAddress.as_view(), name='new_address'),
     path('new_phone_number/', NewPhoneNumber.as_view(), name='new_phone_number'),
     path('new_group/', NewGroup.as_view(), name='new_group'),
-    # path('delete_group/', DeleteGroup.as_view(), name='delete_group'),
-    path('delete_phone/<int:id>', DeletePhone.as_view(), name='delete_phone'),
+    path('delete_group/<int:id>', DeleteGroup.as_view(), name='delete_group'),
+    path('delete_dephone/<int:id>', DeletePhone.as_view(), name='delete_phone'),
     path('delete_email/<int:id>', DeleteEmail.as_view(), name='delete_email'),
 ]

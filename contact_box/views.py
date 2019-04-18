@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Person, Address, Email, PhoneNumber
+from .models import Person, Address, Email, PhoneNumber, Group
 from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm, UserLogin
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -132,14 +132,14 @@ class NewGroup(View):
         return redirect('contact_box:person_all')
 
 
-# class DeleteGroup(View):
-#
-#     def get(self, request, id):
-#         group_instance = Group.objects.get(pk=id)
-#         person_instance.delete()
-#         messages.error(request, 'Person deleted successfully!!!')
-#         return redirect('contact_box:person_all')
-#
+class DeleteGroup(View):
+
+    def get(self, request, id):
+        group_instance = Group.objects.get(pk=id)
+        group_instance.delete()
+        messages.error(request, 'Group deleted successfully!!!')
+        return redirect('contact_box:person_all')
+
 class DeleteEmail(View):
 
     def get(self, request, id):

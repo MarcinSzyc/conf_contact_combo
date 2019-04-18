@@ -124,12 +124,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/home/marcin/Desktop/Bootcamp/KRA_PYT_W_02_WARSZTATY_3/static',
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+#     '/home/marcin/Desktop/Bootcamp/KRA_PYT_W_02_WARSZTATY_3/static',
+# ]
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = "/home/marcin/Desktop/Bootcamp/KRA_PYT_W_02_WARSZTATY_3/static"
 
 FAKER_LOCALE = None
 FAKER_PROVIDERS = None

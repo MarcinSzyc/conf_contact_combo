@@ -59,7 +59,7 @@
                                         {% for item in person_instance.group_set.all %}
                                             <tr>
                                                 <td>{{ item }}</td>
-                                                <td><a href="{% url 'contact_box:delete_phone' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                                                <td><a href="{% url 'contact_box:delete_group' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
                                             </tr>
                                         {% endfor %}
                                     </table>
