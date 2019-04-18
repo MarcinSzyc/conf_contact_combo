@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -121,17 +122,14 @@ USE_L10N = False
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-#     '/home/marcin/Desktop/Bootcamp/KRA_PYT_W_02_WARSZTATY_3/static',
-# ]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/home/marcin/Desktop/Bootcamp/KRA_PYT_W_02_WARSZTATY_3/static"
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 FAKER_LOCALE = None
 FAKER_PROVIDERS = None
