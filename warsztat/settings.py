@@ -133,3 +133,8 @@ STATIC_URL = '/static/'
 
 FAKER_LOCALE = None
 FAKER_PROVIDERS = None
+
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
