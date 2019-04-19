@@ -33,7 +33,7 @@ class Address(models.Model):
 
 
 class PhoneNumber(models.Model):
-    person = models.ForeignKey('Person', on_delete=models.DO_NOTHING)
+    person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True)
     phone_number = models.IntegerField()
     type = models.IntegerField(choices=MOBILE_TYPES, default=1)
 
@@ -42,7 +42,7 @@ class PhoneNumber(models.Model):
 
 
 class Email(models.Model):
-    person = models.ForeignKey('Person', on_delete=models.DO_NOTHING)
+    person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True)
     email_address = models.EmailField()
     type = models.IntegerField(choices=EMAIL_TYPE, default=0)
 
