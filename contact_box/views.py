@@ -4,6 +4,7 @@ from .models import Person, Address, Email, PhoneNumber, Group
 from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm, UserLogin
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from warsztat.mixins import MessageReturnMixin
 
 
 class PersonAll(View):
@@ -14,7 +15,9 @@ class PersonAll(View):
         return render(request, self.template, locals())
 
 
-class NewPerson(View):
+class NewPerson(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/new_person.html'
 
     def get(self, request):
@@ -32,7 +35,9 @@ class NewPerson(View):
         return redirect('contact_box:person_all')
 
 
-class ModifyPersonView(View):
+class ModifyPersonView(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/modify_person.html'
 
     def get(self, request, id):
@@ -54,7 +59,9 @@ class ModifyPersonView(View):
         return redirect('contact_box:person_all')
 
 
-class DeletePerson(View):
+class DeletePerson(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
 
     def get(self, request, id):
         person_instance = Person.objects.get(pk=id)
@@ -63,7 +70,9 @@ class DeletePerson(View):
         return redirect('contact_box:person_all')
 
 
-class NewEmail(View):
+class NewEmail(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/new_email_view.html'
 
     def get(self, request):
@@ -80,7 +89,9 @@ class NewEmail(View):
         return redirect('contact_box:person_all')
 
 
-class NewAddress(View):
+class NewAddress(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/new_address_view.html'
 
     def get(self, request):
@@ -97,7 +108,9 @@ class NewAddress(View):
         return redirect('contact_box:person_all')
 
 
-class NewPhoneNumber(View):
+class NewPhoneNumber(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/new_phone_number_view.html'
 
     def get(self, request):
@@ -115,7 +128,9 @@ class NewPhoneNumber(View):
         return redirect('contact_box:person_all')
 
 
-class NewGroup(View):
+class NewGroup(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'contact_box/new_group_view.html'
 
     def get(self, request):
@@ -132,7 +147,9 @@ class NewGroup(View):
         return redirect('contact_box:person_all')
 
 
-class DeleteGroup(View):
+class DeleteGroup(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
 
     def get(self, request, id):
         group_instance = Group.objects.get(pk=id)
@@ -140,7 +157,10 @@ class DeleteGroup(View):
         messages.error(request, 'Group deleted successfully!!!')
         return redirect('contact_box:person_all')
 
-class DeleteEmail(View):
+
+class DeleteEmail(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
 
     def get(self, request, id):
         email_instance = Email.objects.get(pk=id)
@@ -150,7 +170,9 @@ class DeleteEmail(View):
 
 
 #
-class DeletePhone(View):
+class DeletePhone(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
 
     def get(self, request, id):
         phone_instance = PhoneNumber.objects.get(pk=id)

@@ -51,11 +51,11 @@
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item active">
-                        <a class="nav-link ml-auto" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link mr-auto" href="{% url 'logout' %}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item active">
-                        <a class="nav-link ml-auto" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link mr-auto" href="{% url 'login' %}">Login</a>
                     </li>
                 {% endif %}
             </ul>

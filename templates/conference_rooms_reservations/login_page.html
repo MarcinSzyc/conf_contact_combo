@@ -18,14 +18,6 @@
                         {% csrf_token %}
                         <table class="table">
                             {{ empty_form.as_p }}
-{#                            <label for="person-name">Name:</label>#}
-{#                            <p id="person-name">{{ empty_person.name }}</p>#}
-{#                            <label for="person-name">Last name:</label>#}
-{#                            <p id="person-name">{{ empty_person.last_name }}</p>#}
-{#                            <label for="person-name">Description:</label>#}
-{#                            <p id="person-name">{{ empty_person.description }}</p>#}
-{#                            <label for="person-name">Address:</label>#}
-{#                            <p id="person-name">{{ empty_person.address }}</p>#}
                         </table>
                         <button type="submit" class="btn btn-secondary">Log me in !!</button>
                     </form>

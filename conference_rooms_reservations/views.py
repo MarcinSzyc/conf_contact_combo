@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.views.generic import View
 from .models import Room, Reservation
 from datetime import datetime
+from warsztat.mixins import MessageReturnMixin
 
 
 # Main page view
@@ -21,7 +22,9 @@ class Layout(View):
 
 
 # Class view to show Add Room form and to accept data
-class AddRoom(View):
+class AddRoom(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     form_class = NewRoomForm
     template = 'conference_rooms_reservations/add_room_view.html'
 
@@ -55,7 +58,9 @@ class AllRooms(View):
 
 
 # Class view to process Delete Room request
-class DeleteRoom(View):
+class DeleteRoom(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
 
     def get(self, request, **kwargs):
         instance = Room.objects.get(pk=self.kwargs['id'])
@@ -65,7 +70,9 @@ class DeleteRoom(View):
 
 
 # Class view to show and process Modify Room request
-class ModifyRoom(View):
+class ModifyRoom(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
     template = 'conference_rooms_reservations/modify_room.html'
     form = NewRoomForm
 
