@@ -16,7 +16,7 @@ class Person(models.Model):
     name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     description = models.TextField(blank=True)
-    address = models.ForeignKey('Address', on_delete=models.DO_NOTHING, blank=False)
+    address = models.ForeignKey('Address', on_delete=models.SET_NULL, blank=False, null=True)
 
     def __str__(self):
         return f'{self.name} {self.last_name}'

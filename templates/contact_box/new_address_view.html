@@ -31,6 +31,21 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3>Addresses list:</h3>
+                    <table class="table" style="display: inline">
+                        {% for item in addresses %}
+                            <tr>
+                                <td>{{ item }}</td>
+                                <td><a href="{% url 'contact_box:delete_address' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock user_stories %}

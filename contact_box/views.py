@@ -21,6 +21,7 @@ class NewPerson(MessageReturnMixin, View):
     template = 'contact_box/new_person.html'
 
     def get(self, request):
+        people = Person.objects.all()
         empty_person = PersonForm
         return render(request, self.template, locals())
 
@@ -76,6 +77,7 @@ class NewEmail(MessageReturnMixin, View):
     template = 'contact_box/new_email_view.html'
 
     def get(self, request):
+        emails = Email.objects.all()
         empty_email = EmailForm
         return render(request, self.template, locals())
 
@@ -95,6 +97,7 @@ class NewAddress(MessageReturnMixin, View):
     template = 'contact_box/new_address_view.html'
 
     def get(self, request):
+        addresses = Address.objects.all()
         empty_address = AddressForm
         return render(request, self.template, locals())
 
@@ -114,6 +117,7 @@ class NewPhoneNumber(MessageReturnMixin, View):
     template = 'contact_box/new_phone_number_view.html'
 
     def get(self, request):
+        numbers = PhoneNumber.objects.all()
         empty_phone_number = PhoneNumberForm
         return render(request, self.template, locals())
 
@@ -134,6 +138,7 @@ class NewGroup(MessageReturnMixin, View):
     template = 'contact_box/new_group_view.html'
 
     def get(self, request):
+        groups = Group.objects.all()
         empty_group = GroupForm
         return render(request, self.template, locals())
 
@@ -178,6 +183,17 @@ class DeletePhone(MessageReturnMixin, View):
         phone_instance = PhoneNumber.objects.get(pk=id)
         phone_instance.delete()
         messages.error(request, 'Phone number deleted successfully!!!')
+        return redirect('contact_box:person_all')
+
+
+class DeleteAddress(MessageReturnMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'login/'
+
+    def get(self, request, id):
+        address_instance = Address.objects.get(pk=id)
+        address_instance.delete()
+        messages.error(request, 'Address deleted successfully!!!')
         return redirect('contact_box:person_all')
 
 

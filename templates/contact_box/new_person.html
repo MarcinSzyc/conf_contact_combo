@@ -17,18 +17,32 @@
                     <form action="{% url 'contact_box:new_person' %}" method="POST">
                         {% csrf_token %}
                         <table class="table">
-                            {{ empty_person.as_p }}
-{#                            <label for="person-name">Name:</label>#}
-{#                            <p id="person-name">{{ empty_person.name }}</p>#}
-{#                            <label for="person-name">Last name:</label>#}
-{#                            <p id="person-name">{{ empty_person.last_name }}</p>#}
-{#                            <label for="person-name">Description:</label>#}
-{#                            <p id="person-name">{{ empty_person.description }}</p>#}
-{#                            <label for="person-name">Address:</label>#}
-{#                            <p id="person-name">{{ empty_person.address }}</p>#}
+                            <label for="person-name">Name:</label>
+                            <p id="person-name">{{ empty_person.name }}</p>
+                            <label for="person-name">Last name:</label>
+                            <p id="person-name">{{ empty_person.last_name }}</p>
+                            <label for="person-name">Description:</label>
+                            <p id="person-name">{{ empty_person.description }}</p>
+                            <label for="person-name">Address:</label>
+                            <p id="person-name">{{ empty_person.address }}</p>
                         </table>
                         <button type="submit" class="btn btn-secondary">Save</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3>People list:</h3>
+                    <table class="table" style="display: inline">
+                        {% for item in people %}
+                            <tr>
+                                <td>{{ item }}</td>
+                                <td><a href="{% url 'contact_box:delete_person' id=item.id %}" class="btn btn-outline-danger btn-sm">Remove</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>
