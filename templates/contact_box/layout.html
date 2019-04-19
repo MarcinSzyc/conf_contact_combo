@@ -32,26 +32,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'contact_box:person_all' %}">Show all people</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact_box:new_person' %}">New Person</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact_box:new_email' %}">New Email</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact_box:new_address' %}">New Address</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact_box:new_phone_number' %}">New Phone Number</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'contact_box:new_group' %}">New Group</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Administration
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'contact_box:new_person' %}">New Person</a>
+                        <a class="dropdown-item" href="{% url 'contact_box:new_email' %}">New Email</a>
+                        <a class="dropdown-item" href="{% url 'contact_box:new_address' %}">New Address</a>
+                        <a class="dropdown-item" href="{% url 'contact_box:new_phone_number' %}">New Phone Number</a>
+                        <a class="dropdown-item" href="{% url 'contact_box:new_group' %}">New Group</a>
+                    </div>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item active">
-                        <a class="nav-link mr-auto" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link mr-auto" href="{% url 'logout' %}">Logout ({{ user }})</a>
                     </li>
                 {% else %}
                     <li class="nav-item active">
