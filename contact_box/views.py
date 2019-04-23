@@ -227,3 +227,6 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('Home')
+
+
+

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Textarea
+from django.forms import ModelForm, DateInput, Textarea, TextInput, Select, MultiWidget
 from contact_box.models import Person, Address, Email, PhoneNumber, Group
 from django import forms
 
@@ -7,7 +7,10 @@ class PersonForm(ModelForm):
     class Meta:
         model = Person
         widgets = {
-            'description': Textarea(attrs={'rows': 5, 'cols': 20}),
+            'name': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'last_name': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'description': Textarea(attrs={'rows': 5, 'cols': 20, 'class': 'form-control mb-2 mr-sm-2'}),
+            'address': Select(attrs={'class': 'form-control mb-2 mr-sm-2'})
         }
         exclude = []
 
@@ -15,27 +18,47 @@ class PersonForm(ModelForm):
 class AddressForm(ModelForm):
     class Meta:
         model = Address
+        widgets = {
+            'city': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'street': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'home_number': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'flat_number': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'})
+        }
         exclude = []
 
 
 class EmailForm(ModelForm):
     class Meta:
         model = Email
+        widgets = {
+            'email_address': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'type': Select(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'person': Select(attrs={'class': 'form-control mb-2 mr-sm-2'})
+        }
         exclude = []
 
 
 class PhoneNumberForm(ModelForm):
     class Meta:
         model = PhoneNumber
+        widgets = {
+            'phone_number': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'type': Select(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'person': Select(attrs={'class': 'form-control mb-2 mr-sm-2'})
+        }
         exclude = []
 
 
 class GroupForm(ModelForm):
     class Meta:
         model = Group
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
+            'person': Select(attrs={'class': 'form-control mb-2 mr-sm-2'})
+        }
         exclude = []
 
 
 class UserLogin(forms.Form):
-    username = forms.CharField(max_length=64)
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control mb-2 mr-sm-2'}))

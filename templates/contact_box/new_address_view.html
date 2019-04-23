@@ -16,16 +16,17 @@
                     <h3>Address</h3>
                     <form action="{% url 'contact_box:new_address' %}" method="POST">
                         {% csrf_token %}
-                        <table class="table">
-                            <label for="person-name">Street:</label>
-                            <p id="person-name">{{ empty_address.street }}</p>
-                            <label for="person-name">Home number:</label>
-                            <p id="person-name">{{ empty_address.home_number }}</p>
-                            <label for="person-name">Flat number:</label>
-                            <p id="person-name">{{ empty_address.flat_number }}</p>
-                            <label for="person-name">City:</label>
-                            <p id="person-name">{{ empty_address.city }}</p>
-                        </table>
+                        {{ empty_address }}
+{#                        <table class="table">#}
+{#                            <label for="person-name">Street:</label>#}
+{#                            <p id="person-name">{{ empty_address.street }}</p>#}
+{#                            <label for="person-name">Home number:</label>#}
+{#                            <p id="person-name">{{ empty_address.home_number }}</p>#}
+{#                            <label for="person-name">Flat number:</label>#}
+{#                            <p id="person-name">{{ empty_address.flat_number }}</p>#}
+{#                            <label for="person-name">City:</label>#}
+{#                            <p id="person-name">{{ empty_address.city }}</p>#}
+{#                        </table>#}
                         <button type="submit" class="btn btn-secondary">Save</button>
                     </form>
                 </div>
