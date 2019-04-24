@@ -1,5 +1,5 @@
 {% extends 'contact_box/layout.html' %}
-{% block user_stories %}
+{% block contact_box %}
     {% if messages %}
         {% for message in messages %}
             <div{% if message.tags == 'error' %}
@@ -48,4 +48,4 @@
         </div>
     </div>
 
-{% endblock user_stories %}
+{% endblock contact_box %}

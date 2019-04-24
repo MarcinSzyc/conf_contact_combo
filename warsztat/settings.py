@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'conference_rooms_reservations',
     'contact_box',
+    'django_heroku'
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'general.login_context_processor.login_form_context'
             ],
         },
     },
@@ -133,7 +135,7 @@ STATICFILES_DIRS = (
 FAKER_LOCALE = None
 FAKER_PROVIDERS = None
 
-
 # Configure Django App for Heroku.
 import django_heroku
+
 django_heroku.settings(locals())

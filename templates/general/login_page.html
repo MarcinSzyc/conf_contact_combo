@@ -1,0 +1,68 @@
+{% extends 'contact_box/layout.html' %}
+{% block login %}
+
+{#<!-- Button trigger modal -->#}
+{#<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">#}
+{#  Launch demo modal#}
+{#</button>#}
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'login' %}" method="POST">#}
+            {% csrf_token %}
+            <table class="table">
+                {{ empty_form.as_p }}
+            </table>
+            <button type="submit" class="btn btn-secondary">Log me in !!</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script>
+        $('a:link > btn').click(function () {
+            $('loginModal').modal('show')
+        })
+    </script>
+
+{#    <div class="row mb-2">#}
+{#        <div class="col-md-4">#}
+{#            {% if messages %}#}
+{#                {% for message in messages %}#}
+{#                    <div{% if message.tags == 'error' %}#}
+{#                        class="alert alert-danger" role="alert"#}
+{#                    {% else %}#}
+{#                        class="alert alert-success" role="alert"#}
+{#                    {% endif %}>{{ message }}</div>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#            <div class="card flex-md-row mb-4 box-shadow h-md-250">#}
+{#                <div class="card-body d-flex flex-column align-items-start">#}
+{#                    <h3>Provide your credentials:</h3>#}
+{#                    <form action="{% url 'login' %}" method="POST">#}
+{#                        {% csrf_token %}#}
+{#                        <table class="table">#}
+{#                            {{ empty_form.as_p }}#}
+{#                        </table>#}
+{#                        <button type="submit" class="btn btn-secondary">Log me in !!</button>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock login %}

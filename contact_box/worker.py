@@ -10,8 +10,8 @@ def populate_initial_data():
     address_instance = Address(city=fake.city(), street=fake.street_name(), home_number=randint(0, 1000),
                                flat_number=randint(0, 100))
     email_instance = Email(email_address=fake.email(), type=choice(EMAIL_TYPE)[0])
-    phone_instance.save()
     person_instance.save()
+    phone_instance.save()
     address_instance.save()
     email_instance.save()
 

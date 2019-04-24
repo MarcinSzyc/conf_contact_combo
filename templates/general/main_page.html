@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'generic_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'general/generic_styles.css' %}">
 
 </head>
 <body background="{% static 'images/abstract-abstraction-background-1044989.jpg' %}">
@@ -23,7 +23,7 @@
     <div class="row mb-2">
         <div class="col-md">
             <div class="conf_room btn btn-outline-warning btn-sm">Conference Room Reservations</div>
-            <div class="user_stories btn btn-outline-warning btn-sm">Contact Box</div>
+            <div class="contact_box btn btn-outline-warning btn-sm">Contact Box</div>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
         conf_room()
     })
 
-    function user_stories() {
+    function contact_box() {
         let zapytanie = $.ajax({
             url: `http://localhost:8000/contact_box/`,
             type: "GET",
@@ -58,8 +58,8 @@
         return zapytanie
     }
 
-    $('.user_stories').click(function () {
-        user_stories()
+    $('.contact_box').click(function () {
+        contact_box()
     })
 
 </script>

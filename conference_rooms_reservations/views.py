@@ -7,13 +7,6 @@ from datetime import datetime
 from warsztat.mixins import MessageReturnMixin
 
 
-# Main page view
-class Home(View):
-    template = 'conference_rooms_reservations/main_page.html'
-
-    def get(self, request):
-        return render(request, self.template)
-
 
 # Conference reservation main page view
 class Layout(View):

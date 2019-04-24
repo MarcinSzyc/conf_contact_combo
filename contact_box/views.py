@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Person, Address, Email, PhoneNumber, Group
-from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm, UserLogin
+from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from warsztat.mixins import MessageReturnMixin
 
 
@@ -196,37 +195,6 @@ class DeleteAddress(MessageReturnMixin, View):
         messages.error(request, 'Address deleted successfully!!!')
         return redirect('contact_box:person_all')
 
-
-class Login(View):
-    template = 'conference_rooms_reservations/login_page.html'
-
-    def get(self, request):
-        empty_form = UserLogin
-        return render(request, self.template, locals())
-
-    def post(self, request):
-        filled_form = UserLogin(request.POST)
-        if filled_form.is_valid():
-            username = filled_form.cleaned_data.get('username')
-            password = filled_form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user:
-                messages.success(request, f'Witaj {user} !!')
-                login(request, user)
-                return redirect('login')
-            else:
-                messages.error(request, 'Nie ma takiego użytkownika!')
-                return redirect('login')
-        else:
-            messages.error(request, 'Upps coś poszło nie tak!')
-            return redirect('login')
-
-
-class Logout(View):
-
-    def get(self, request):
-        logout(request)
-        return redirect('Home')
 
 
 
