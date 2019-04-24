@@ -60,8 +60,8 @@ class ModifyPersonView(MessageReturnMixin, View):
 
 
 class DeletePerson(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    # login_url = '/contact_box/'
+    redirect_field_name = 'contact_box/'
 
     def get(self, request, id):
         person_instance = Person.objects.get(pk=id)

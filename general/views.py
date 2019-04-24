@@ -23,9 +23,9 @@ class Home(View):
 class Login(View):
     template = 'general/login_page.html'
 
-    # def get(self, request):
-    #     empty_form = UserLogin
-    #     return render(request, self.template, locals())
+    def get(self, request):
+        empty_form = UserLogin
+        return render(request, self.template, locals())
 
     def post(self, request):
         filled_form = UserLogin(request.POST)

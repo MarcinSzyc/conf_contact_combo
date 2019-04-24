@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'conference_rooms_reservations',
     'contact_box',
+    'general',
     'django_heroku'
+
 ]
 
 MIDDLEWARE = [
