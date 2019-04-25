@@ -6,14 +6,17 @@ from random import choice, randint
 def populate_initial_data():
     fake = Faker()
     person_instance = Person(name=fake.first_name(), last_name=fake.last_name(), description=fake.text())
-    phone_instance = PhoneNumber(phone_number=fake.msisdn(), type=choice(MOBILE_TYPES)[0])
+    phone_instance = PhoneNumber(phone_number=fake.isbn10(''), type=choice(MOBILE_TYPES)[0])
     address_instance = Address(city=fake.city(), street=fake.street_name(), home_number=randint(0, 1000),
                                flat_number=randint(0, 100))
     email_instance = Email(email_address=fake.email(), type=choice(EMAIL_TYPE)[0])
-    person_instance.save()
-    phone_instance.save()
-    address_instance.save()
-    email_instance.save()
+    try:
+        person_instance.save()
+        phone_instance.save()
+        address_instance.save()
+        email_instance.save()
+    except:
+        pass
 
 
 def create_groups():
