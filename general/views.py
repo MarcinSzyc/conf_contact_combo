@@ -31,14 +31,15 @@ class Login(View):
             password = filled_form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user:
-                messages.success(request, f'Witaj {user} !!')
+                messages.success(request, f'Hello {user} !!')
                 login(request, user)
                 return redirect(self.request.META.get('HTTP_REFERER'))
             else:
-                messages.error(request, 'Nie ma takiego użytkownika!')
+                messages.error(request, 'There is no such username in the database!')
                 return redirect(self.request.META.get('HTTP_REFERER'))
         else:
-            messages.error(request, 'Upps coś poszło nie tak!')
+            error_list = [item for item in filled_form.errors.values()]
+            messages.error(request, f'Upps something went wrong!! \n {error_list[0]}')
             return redirect(self.request.META.get('HTTP_REFERER'))
 
 
@@ -62,8 +63,9 @@ class Register(View):
         filled_form = UserRegistration(request.POST)
         if filled_form.is_valid():
             filled_form.save()
-            messages.success(request, 'Uzytkownik stworzony poprawnie!')
+            messages.success(request, 'User created!')
             return redirect(self.request.META.get('HTTP_REFERER'))
         else:
-            messages.error(request, 'Upps coś poszło nie tak!')
+            error_list = [item for item in filled_form.errors.values()]
+            messages.error(request, f'Upps something went wrong!! \n {error_list}')
             return redirect(self.request.META.get('HTTP_REFERER'))
