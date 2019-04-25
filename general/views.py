@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserLogin
+from .forms import UserLogin, UserRegistration
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.urls import resolve
+from django.contrib.auth.forms import UserCreationForm
 
-
-def your_view(request):
-    # resolve the url from the path
-    url_name = resolve(request.path).url_name
 
 # Main page view
 class Home(View):
@@ -51,3 +48,22 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('Home')
+
+
+# Register handling
+class Register(View):
+    template = 'general/login_page.html'
+
+    def get(self, request):
+        empty_form = UserRegistration
+        return render(request, self.template, locals())
+
+    def post(self, request):
+        filled_form = UserRegistration(request.POST)
+        if filled_form.is_valid():
+            filled_form.save()
+            messages.success(request, 'Uzytkownik stworzony poprawnie!')
+            return redirect(self.request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, 'Upps coś poszło nie tak!')
+            return redirect(self.request.META.get('HTTP_REFERER'))
