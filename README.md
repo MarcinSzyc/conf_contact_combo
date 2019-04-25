@@ -1,4 +1,4 @@
-# Project Title
+# Conference Contact Combo
 
 Applications gives 2 User Interfaces. One is responsible for managing Conference Room Reservations, second one handles Contact Box functionality.
 
