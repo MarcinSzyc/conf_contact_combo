@@ -16,9 +16,11 @@ Give examples
 
 ### Installing
 
-To run project you need to use requirements.txt. file:
+To run project you need to use ```requirements.txt.``` file:
 
+```
 pip install -r requirements.txt
+```
 
 ## Running the tests
 
