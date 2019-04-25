@@ -36,7 +36,7 @@ pip install -r requirements.txt
   ```python manage.py loaddata general/fixtures/general_fixture.json```
   
   * Dedicated commands:
-  ```python manage.py update_contact_box``` and ```python manage.py update_conf_room``` dedicated commands.
+  ```python manage.py update_contact_box``` and ```python manage.py update_conf_room```.
 
 ## Built With
 
