@@ -1,4 +1,4 @@
-from .models import Person, PhoneNumber, MOBILE_TYPES, Address, Group, Email, EMAIL_TYPE
+from contact_box.models import Person, PhoneNumber, MOBILE_TYPES, Address, Group, Email, EMAIL_TYPE
 from faker import Faker
 from random import choice, randint
 
