@@ -1,6 +1,6 @@
 # Conference Contact Combo
 
-Applications gives two User Interfaces. One is responsible for managing Conference Room Reservations, second one handles Contact Box functionality.
+Application gives two User Interfaces. One is responsible for managing Conference Room Reservations, second one handles Contact Box functionality.
 
 * Conference Room Reservations:
   * add, remove, modify rooms.
