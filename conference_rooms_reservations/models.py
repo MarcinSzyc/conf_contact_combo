@@ -9,18 +9,18 @@ def validate_date(date):
 
 
 class Room(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    capacity = models.IntegerField(blank=False, default=0)
-    projector = models.BooleanField(blank=True)
+    name = models.CharField('room name', max_length=100, unique=True)
+    capacity = models.IntegerField('room capacity', blank=False, default=0)
+    projector = models.BooleanField('projector', blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Reservation(models.Model):
-    date = models.DateField(blank=False, validators=[validate_date])
-    comment = models.TextField(blank=True)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=False)
+    date = models.DateField('reservation date', blank=False, validators=[validate_date])
+    comment = models.TextField('comment', blank=True)
+    room = models.ForeignKey('Room', on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
         return f"{self.room} {self.date}"
