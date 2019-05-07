@@ -13,9 +13,9 @@ EMAIL_TYPE = (
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=32)
-    last_name = models.CharField(max_length=32)
-    description = models.TextField(blank=True)
+    name = models.CharField('first name', max_length=32)
+    last_name = models.CharField('last name', max_length=32)
+    description = models.TextField('description', blank=True)
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, blank=False, null=True)
 
     def __str__(self):
@@ -23,10 +23,10 @@ class Person(models.Model):
 
 
 class Address(models.Model):
-    city = models.CharField(max_length=32)
-    street = models.CharField(max_length=64)
-    home_number = models.IntegerField()
-    flat_number = models.IntegerField(blank=True)
+    city = models.CharField('city', max_length=32)
+    street = models.CharField('street name', max_length=64)
+    home_number = models.IntegerField('home number')
+    flat_number = models.IntegerField('flat number', blank=True)
 
     def __str__(self):
         return f'{self.street} {self.home_number}; {self.city}'
@@ -34,8 +34,8 @@ class Address(models.Model):
 
 class PhoneNumber(models.Model):
     person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True)
-    phone_number = models.BigIntegerField()
-    type = models.IntegerField(choices=MOBILE_TYPES, default=1)
+    phone_number = models.BigIntegerField('phone number')
+    type = models.IntegerField('phone type', choices=MOBILE_TYPES, default=1)
 
     def __str__(self):
         return f'{self.phone_number}'
@@ -43,15 +43,15 @@ class PhoneNumber(models.Model):
 
 class Email(models.Model):
     person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True)
-    email_address = models.EmailField()
-    type = models.IntegerField(choices=EMAIL_TYPE, default=0)
+    email_address = models.EmailField('email address')
+    type = models.IntegerField('email type', choices=EMAIL_TYPE, default=0)
 
     def __str__(self):
         return self.email_address
 
 
 class Group(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField('group name', max_length=100, blank=False)
     person = models.ManyToManyField(Person)
 
     def __str__(self):
