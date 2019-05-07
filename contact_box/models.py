@@ -34,7 +34,7 @@ class Address(models.Model):
 
 class PhoneNumber(models.Model):
     person = models.ForeignKey('Person', on_delete=models.SET_NULL, null=True)
-    phone_number = models.BigIntegerField('phone number')
+    phone_number = models.IntegerField('phone number')
     type = models.IntegerField('phone type', choices=MOBILE_TYPES, default=1)
 
     def __str__(self):
