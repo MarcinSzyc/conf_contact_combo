@@ -3,9 +3,6 @@ from django.views import View
 from .forms import UserLogin, UserRegistration
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
-from django.urls import resolve
-from django.contrib.auth.forms import UserCreationForm
 
 
 # Main page view
