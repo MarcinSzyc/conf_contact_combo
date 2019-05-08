@@ -16,8 +16,7 @@ class Layout(View):
 
 # Class view to show Add Room form and to accept data
 class AddRoom(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/conf_rooms_reservations/address/'
     form_class = NewRoomForm
     template = 'conference_rooms_reservations/add_room_view.html'
 
@@ -52,8 +51,7 @@ class AllRooms(View):
 
 # Class view to process Delete Room request
 class DeleteRoom(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/conf_rooms_reservations/address/'
 
     def get(self, request, **kwargs):
         instance = Room.objects.get(pk=self.kwargs['id'])
@@ -64,8 +62,7 @@ class DeleteRoom(MessageReturnMixin, View):
 
 # Class view to show and process Modify Room request
 class ModifyRoom(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/conf_rooms_reservations/address/'
     template = 'conference_rooms_reservations/modify_room.html'
     form = NewRoomForm
 
@@ -173,46 +170,3 @@ class RoomSearch(View):
                     output = output.exclude(name=item.name)
 
         return render(request, self.template, locals())
-
-        # OLD
-        #
-        # global output, reserve
-        # output = Reservation.objects.select_related()
-        # reserve = False
-        #
-        # room_list = [item.name.upper() for item in Room.objects.select_related()]
-        #
-        # if room_name not in room_list:
-        #     if room_name == '':
-        #         output = output
-        #     else:
-        #         return render(request, self.template, {
-        #             'message': f'Sala {room_name} NIE ISTNIEJE, spróbuj jeszcze raz!',
-        #             'empty_reservations': empty_reservations,
-        #             'empty_room': empty_room,
-        #             'reserve': reserve,
-        #         })
-        # else:
-        #     output = output.filter(room__name=room_name)
-        #     output = output.filter(room__capacity__gte=room_capacity)
-        #     output = output.filter(date=room_date)
-        #     if room_projector == 'on':
-        #         output = output.filter(room__projector=True)
-        #     else:
-        #         output = output.filter(room__projector=False)
-        #     if len(output) == 0:
-        #         return render(request, self.template, {
-        #             'message': f'BRAK wolnych sal dla podanych kryteriów wyszukiwania',
-        #             'empty_reservations': empty_reservations,
-        #             'empty_room': empty_room,
-        #             'reserve': reserve,
-        #         })
-        #     else:
-        #         reserve = True
-        #         return render(request, self.template, {
-        #             'message': f'Sala {room_name} jest wolna w podanym terminie',
-        #             'empty_reservations': empty_reservations,
-        #             'empty_room': empty_room,
-        #             'reserve': reserve,
-        #             'output': output,
-        #         })
