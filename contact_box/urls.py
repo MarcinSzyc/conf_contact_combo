@@ -24,12 +24,12 @@ urlpatterns = [
     path('new/', NewPerson.as_view(), name='new_person'),
     path('modify/<int:id>', ModifyPersonView.as_view(), name='modify_person_view'),
     path('delete/<int:id>', DeletePerson.as_view(), name='delete_person'),
-    path('new_email/', NewEmail.as_view(), name='new_email'),
     path('new_address/', NewAddress.as_view(), name='new_address'),
     path('new_phone_number/', NewPhoneNumber.as_view(), name='new_phone_number'),
+    path('new_email/', NewEmail.as_view(), name='new_email'),
     path('new_group/', NewGroup.as_view(), name='new_group'),
-    path('delete_group/<int:id>', DeleteGroup.as_view(), name='delete_group'),
+    path('delete_address/<int:id>', DeleteAddress.as_view(), name='delete_address'),
     path('delete_phone/<int:id>', DeletePhone.as_view(), name='delete_phone'),
     path('delete_email/<int:id>', DeleteEmail.as_view(), name='delete_email'),
-    path('delete_address/<int:id>', DeleteAddress.as_view(), name='delete_address'),
+    path('delete_group/<int:id>', DeleteGroup.as_view(), name='delete_group')
 ]

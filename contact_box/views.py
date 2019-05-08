@@ -15,8 +15,7 @@ class PersonAll(View):
 
 
 class NewPerson(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/new_person.html'
 
     def get(self, request):
@@ -36,8 +35,7 @@ class NewPerson(MessageReturnMixin, View):
 
 
 class ModifyPersonView(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/modify_person.html'
 
     def get(self, request, id):
@@ -60,8 +58,7 @@ class ModifyPersonView(MessageReturnMixin, View):
 
 
 class DeletePerson(MessageReturnMixin, View):
-    # login_url = '/contact_box/'
-    redirect_field_name = 'contact_box/'
+    login_url = '/contact_box/'
 
     def get(self, request, id):
         person_instance = Person.objects.get(pk=id)
@@ -71,8 +68,7 @@ class DeletePerson(MessageReturnMixin, View):
 
 
 class NewEmail(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/new_email_view.html'
 
     def get(self, request):
@@ -91,8 +87,7 @@ class NewEmail(MessageReturnMixin, View):
 
 
 class NewAddress(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/new_address_view.html'
 
     def get(self, request):
@@ -111,8 +106,7 @@ class NewAddress(MessageReturnMixin, View):
 
 
 class NewPhoneNumber(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/new_phone_number_view.html'
 
     def get(self, request):
@@ -132,8 +126,7 @@ class NewPhoneNumber(MessageReturnMixin, View):
 
 
 class NewGroup(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
     template = 'contact_box/new_group_view.html'
 
     def get(self, request):
@@ -152,8 +145,7 @@ class NewGroup(MessageReturnMixin, View):
 
 
 class DeleteGroup(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
 
     def get(self, request, id):
         group_instance = Group.objects.get(pk=id)
@@ -163,8 +155,7 @@ class DeleteGroup(MessageReturnMixin, View):
 
 
 class DeleteEmail(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
 
     def get(self, request, id):
         email_instance = Email.objects.get(pk=id)
@@ -175,8 +166,7 @@ class DeleteEmail(MessageReturnMixin, View):
 
 #
 class DeletePhone(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
 
     def get(self, request, id):
         phone_instance = PhoneNumber.objects.get(pk=id)
@@ -186,15 +176,10 @@ class DeletePhone(MessageReturnMixin, View):
 
 
 class DeleteAddress(MessageReturnMixin, View):
-    login_url = '/login/'
-    redirect_field_name = 'login/'
+    login_url = '/contact_box/'
 
     def get(self, request, id):
         address_instance = Address.objects.get(pk=id)
         address_instance.delete()
         messages.error(request, 'Address deleted successfully!!!')
         return redirect('contact_box:person_all')
-
-
-
-
