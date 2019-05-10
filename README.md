@@ -38,6 +38,14 @@ pip install -r requirements.txt
   * Dedicated commands:
   ```python manage.py update_contact_box``` and ```python manage.py update_conf_room```.
 
+## Tests
+
+Tests for views, models and forms present. Please use:
+
+* Test entire project: ```python manage.py test```
+* Test conference rooms reservations only: ```python manage.py test conference_rooms_reservations```
+* Test contact box only: ```python manage.py test contact_box```
+
 ## Built With
 
 * Python
