@@ -64,7 +64,8 @@ class DeletePerson(MessageReturnMixin, View):
         person_instance = Person.objects.get(pk=id)
         person_instance.delete()
         messages.error(request, 'Person deleted successfully!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
+        # return redirect('contact_box:person_all')
 
 
 class NewEmail(MessageReturnMixin, View):
@@ -83,7 +84,7 @@ class NewEmail(MessageReturnMixin, View):
             messages.success(request, 'Email created successfully!!!')
         else:
             messages.error(request, 'Upps, something went wrong!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class NewAddress(MessageReturnMixin, View):
@@ -102,7 +103,7 @@ class NewAddress(MessageReturnMixin, View):
             messages.success(request, 'Address created successfully!!!')
         else:
             messages.error(request, 'Upps, something went wrong!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class NewPhoneNumber(MessageReturnMixin, View):
@@ -122,7 +123,7 @@ class NewPhoneNumber(MessageReturnMixin, View):
         else:
             error_list = [item for item in filled_form.errors.values()]
             messages.error(request, f'Upps, something went wrong!!! \n {error_list}')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class NewGroup(MessageReturnMixin, View):
@@ -141,7 +142,7 @@ class NewGroup(MessageReturnMixin, View):
             messages.success(request, 'Group created successfully!!!')
         else:
             messages.error(request, 'Upps, something went wrong!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class DeleteGroup(MessageReturnMixin, View):
@@ -151,7 +152,7 @@ class DeleteGroup(MessageReturnMixin, View):
         group_instance = Group.objects.get(pk=id)
         group_instance.delete()
         messages.error(request, 'Group deleted successfully!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class DeleteEmail(MessageReturnMixin, View):
@@ -161,10 +162,9 @@ class DeleteEmail(MessageReturnMixin, View):
         email_instance = Email.objects.get(pk=id)
         email_instance.delete()
         messages.error(request, 'Email address deleted successfully!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
-#
 class DeletePhone(MessageReturnMixin, View):
     login_url = '/contact_box/'
 
@@ -172,7 +172,7 @@ class DeletePhone(MessageReturnMixin, View):
         phone_instance = PhoneNumber.objects.get(pk=id)
         phone_instance.delete()
         messages.error(request, 'Phone number deleted successfully!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
 
 
 class DeleteAddress(MessageReturnMixin, View):
@@ -182,4 +182,4 @@ class DeleteAddress(MessageReturnMixin, View):
         address_instance = Address.objects.get(pk=id)
         address_instance.delete()
         messages.error(request, 'Address deleted successfully!!!')
-        return redirect('contact_box:person_all')
+        return redirect(self.request.META.get('HTTP_REFERER'))
