@@ -24,7 +24,7 @@ class Login(View):
     def post(self, request):
         filled_form = UserLogin(request.POST)
         if filled_form.is_valid():
-            username = filled_form.cleaned_data.get('username')
+            username = filled_form.cleaned_data.get('username_field')
             password = filled_form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user:
