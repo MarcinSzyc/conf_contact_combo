@@ -10,7 +10,7 @@ class PersonAll(View):
     template = 'contact_box/person_all.html'
 
     def get(self, request):
-        all_people = Person.objects.select_related()
+        all_people = Person.objects.select_related().order_by('id')
         return render(request, self.template, locals())
 
 
