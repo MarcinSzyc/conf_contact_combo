@@ -2,18 +2,18 @@
 {% block conf_room_reservations %}
     <div class="row mb-2">
         <div class="col-md">
-        {% if messages %}
-            {% for message in messages %}
-                <div{% if message.tags == 'error' %}
-                    class="alert alert-danger" role="alert"
-                {% else %}
-                    class="alert alert-success" role="alert"
-                {% endif %}>{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div{% if message.tags == 'error' %}
+                        class="alert alert-danger" role="alert"
+                    {% else %}
+                        class="alert alert-success" role="alert"
+                    {% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
                 <div class="card-body d-flex flex-column align-items-center">
-                <h2>Rooms:</h2>
+                    <h2>Rooms:</h2>
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -27,25 +27,34 @@
                                 <tr>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.capacity }}</td>
-                                    <td>{{ item.projector }}</td>
+                                    {% if item.projector %}
+                                        <td class="table-success">Available</td>
+                                    {% else %}
+                                        <td class="table-secondary">Unavailable</td>
+                                    {% endif %}
                                     {% if item.name in reserved_today %}
                                         <td class="table-warning">Reserved</td>
                                     {% else %}
                                         <td class="table-success">Free</td>
                                     {% endif %}
                                     <td>
-                                        <form action="{% url 'conference_rooms_reservations:reserve_room_view' id=item.id %}" method="GET">
+                                        <form action="{% url 'conference_rooms_reservations:reserve_room_view' id=item.id %}"
+                                              method="GET">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-outline-success btn-sm">Reserve</button>
+                                            <button type="submit" class="btn btn-outline-success btn-sm">Reserve
+                                            </button>
                                         </form>
-                                        <form action="{% url 'conference_rooms_reservations:modify_room' id=item.id %}" method="GET">
+                                        <form action="{% url 'conference_rooms_reservations:modify_room' id=item.id %}"
+                                              method="GET">
                                             <button type="submit" class="btn btn-outline-warning btn-sm">Modify</button>
                                         </form>
-                                        <form action="{% url 'conference_rooms_reservations:delete_room' id=item.id %}" method="GET">
+                                        <form action="{% url 'conference_rooms_reservations:delete_room' id=item.id %}"
+                                              method="GET">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
                                         </form>
-                                        <form action="{% url 'conference_rooms_reservations:info_view' id=item.id %}" method="GET">
+                                        <form action="{% url 'conference_rooms_reservations:info_view' id=item.id %}"
+                                              method="GET">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-outline-info btn-sm">Info</button>
                                         </form>
