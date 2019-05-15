@@ -4,13 +4,16 @@ from .models import Person, Address, Email, PhoneNumber, Group
 from .forms import PersonForm, AddressForm, EmailForm, PhoneNumberForm, GroupForm
 from django.contrib import messages
 from warsztat.mixins import MessageReturnMixin
-
+from django.core.paginator import Paginator
 
 class PersonAll(View):
     template = 'contact_box/person_all.html'
 
     def get(self, request):
         all_people = Person.objects.select_related().order_by('id')
+        paginator = Paginator(all_people, 10)
+        page = request.GET.get('page')
+        people = paginator.get_page(page)
         return render(request, self.template, locals())
 
 
