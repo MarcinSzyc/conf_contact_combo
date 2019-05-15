@@ -7,7 +7,6 @@ from datetime import datetime
 from warsztat.mixins import MessageReturnMixin
 
 
-
 # Conference reservation main page view
 class Layout(View):
     def get(self, request):
@@ -35,11 +34,12 @@ class AddRoom(MessageReturnMixin, View):
 
 
 # Class view to show All Rooms
+
 class AllRooms(View):
     template = 'conference_rooms_reservations/all_rooms_view.html'
 
     def get(self, request):
-        rooms = Room.objects.select_related()
+        rooms = Room.objects.select_related().order_by('id')
         date_now = datetime.now().date()
         reserved_today = []
         for item in rooms:
