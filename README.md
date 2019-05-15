@@ -56,6 +56,8 @@ Please use:
 * Bootstrap
 * Postgres
 * Selenium
+* www.heroku.com
+* www.buddy.works (CI)
 
 ## License
 
