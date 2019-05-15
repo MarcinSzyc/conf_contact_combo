@@ -1,6 +1,5 @@
 from django.test import TestCase
-from selenium import webdriver
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 
 class GeneralEndPointsTest(TestCase):
 
@@ -16,6 +15,3 @@ class GeneralEndPointsTest(TestCase):
         response = self.client.get('/register/', format='json')
         self.assertEqual(response.status_code, 200)
 
-class MainPageLinksTests(StaticLiveServerTestCase):
-    def setUp(self):
-        self.browser = webdriver
