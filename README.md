@@ -40,7 +40,8 @@ pip install -r requirements.txt
 
 ## Tests
 
-Tests for views, models and forms present. Please use:
+Tests for views, models and forms. Python built in unittest used along with selenium for functional tests.
+Please use:
 
 * Test entire project: ```python manage.py test```
 * Test conference rooms reservations only: ```python manage.py test conference_rooms_reservations```
@@ -54,6 +55,7 @@ Tests for views, models and forms present. Please use:
 * HTML
 * Bootstrap
 * Postgres
+* Selenium
 
 ## License
 
