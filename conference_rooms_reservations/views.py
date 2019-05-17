@@ -5,6 +5,7 @@ from django.views.generic import View
 from .models import Room, Reservation
 from datetime import datetime
 from warsztat.mixins import MessageReturnMixin
+from django.core.paginator import Paginator
 
 
 # Conference reservation main page view
@@ -40,6 +41,9 @@ class AllRooms(View):
 
     def get(self, request):
         rooms = Room.objects.select_related().order_by('id')
+        paginator = Paginator(rooms, 20)
+        page = request.GET.get('page')
+        all_rooms = paginator.get_page(page)
         date_now = datetime.now().date()
         reserved_today = []
         for item in rooms:
