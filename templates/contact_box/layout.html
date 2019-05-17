@@ -50,7 +50,8 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link mr-auto register" href='{% url 'password_reset' %}'>Reset Password</a>
+                        <a class="nav-link mr-auto password-reset" data-target="#pwdModal" data-toggle="modal" href="#">Forgot
+                            my password</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link mr-auto register" href='#'>Register</a>
@@ -118,6 +119,40 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{#Password reset modal#}
+<div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-center">What's My Password?</h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>If you have forgotten your password you can reset it here.</p>
+                                <div class="panel-body">
+                                    <form action="{% url 'password_reset' %}" method="POST">
+                                        {% csrf_token %}
+                                        {{ password_reset_form|crispy }}
+                                        <button type="submit" class="btn btn-primary">Send</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
