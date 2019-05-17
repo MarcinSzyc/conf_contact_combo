@@ -3,6 +3,9 @@ from django.views import View
 from .forms import UserLogin, UserRegistration
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordResetView
+from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 
 
 # Main page view
@@ -66,3 +69,17 @@ class Register(View):
             error_list = [item for item in filled_form.errors.values()]
             messages.error(request, f'Upps something went wrong!! \n {error_list}')
             return redirect(self.request.META.get('HTTP_REFERER'))
+
+
+class ModifiedPasswordResetView(PasswordResetView):
+    success_url = reverse_lazy('password_reset_done')
+
+    def get_success_url(self):
+        """Return the URL to redirect to after processing a valid form."""
+        if not self.success_url:
+            raise ImproperlyConfigured("No URL to redirect to. Provide a success_url.")
+        else:
+            messages.info(self.request,
+                             '''We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly. \n
+                             If you don't receive an email, please make sure you've entered the address you registered with,and check your spam folder.''')
+        return str(self.request.META.get('HTTP_REFERER'))  # success_url may be lazy
