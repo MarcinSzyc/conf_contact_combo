@@ -82,27 +82,26 @@
                     <a class="btn btn-outline-secondary btn-sm" href="{% url 'contact_box:new_person' %}">New Person</a>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="pagination justify-content-center">
-            <span class="step-links">
-                {% if people.has_previous %}
-                    <a class="btn btn-outline-info btn-sm" href="?page=1">&laquo; first</a>
-                    <a class="btn btn-outline-info btn-sm" href="?page={{ people.previous_page_number }}">previous</a>
-                {% endif %}
+            <div class="container">
+                <div class="pagination justify-content-center">
+                    <span class="step-links">
+                        {% if people.has_previous %}
+                            <a class="btn btn-outline-info btn-sm" href="?page=1">&laquo; first</a>
+                            <a class="btn btn-outline-info btn-sm" href="?page={{ people.previous_page_number }}">previous</a>
+                        {% endif %}
 
-                <span class="current">
-                    Page {{ people.number }} of {{ people.paginator.num_pages }}.
-                </span>
+                        <span class="current">
+                            Page {{ people.number }} of {{ people.paginator.num_pages }}.
+                        </span>
 
-                {% if people.has_next %}
-                    <a class="btn btn-outline-info btn-sm" href="?page={{ people.next_page_number }}">next</a>
-                    <a class="btn btn-outline-info btn-sm" href="?page={{ people.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+                        {% if people.has_next %}
+                            <a class="btn btn-outline-info btn-sm" href="?page={{ people.next_page_number }}">next</a>
+                            <a class="btn btn-outline-info btn-sm" href="?page={{ people.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
         </div>
-        <br>
     </div>
 
 {% endblock contact_box %}
