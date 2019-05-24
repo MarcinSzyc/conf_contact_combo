@@ -6,6 +6,7 @@ from django.contrib import messages
 from warsztat.mixins import MessageReturnMixin
 from django.core.paginator import Paginator
 
+
 class PersonAll(View):
     template = 'contact_box/person_all.html'
 
@@ -144,7 +145,8 @@ class NewGroup(MessageReturnMixin, View):
             filled_form.save()
             messages.success(request, 'Group created successfully!!!')
         else:
-            messages.error(request, 'Upps, something went wrong!!!')
+            error_list = [item for item in filled_form.errors.values()]
+            messages.error(request, f'Upps, something went wrong!!! \n {error_list}')
         return redirect(self.request.META.get('HTTP_REFERER'))
 
 
@@ -185,4 +187,15 @@ class DeleteAddress(MessageReturnMixin, View):
         address_instance = Address.objects.get(pk=id)
         address_instance.delete()
         messages.error(request, 'Address deleted successfully!!!')
+        return redirect(self.request.META.get('HTTP_REFERER'))
+
+
+class RemoveFromGroup(MessageReturnMixin, View):
+    login_url = '/contact_box/'
+
+    def get(self, request, group_id, person_id):
+        group_instance = Group.objects.get(pk=group_id)
+        person_instance = Person.objects.get(pk=person_id)
+        group_instance.person.remove(person_instance)
+        messages.error(request, 'Person removed from the group successfully!!!')
         return redirect(self.request.META.get('HTTP_REFERER'))

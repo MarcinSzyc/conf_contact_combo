@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.urls import path
 from contact_box.views import (PersonAll, NewPerson, ModifyPersonView, DeletePerson, NewEmail, NewAddress,
-                               NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail, DeleteGroup, DeleteAddress)
+                               NewPhoneNumber, NewGroup, DeletePhone, DeleteEmail, DeleteGroup, DeleteAddress, RemoveFromGroup)
+from django.views.decorators.cache import cache_page
 
 app_name = "contact_box"
 
 urlpatterns = [
-    path('', PersonAll.as_view(), name='person_all'),
+    path('', (PersonAll.as_view()), name='person_all'),
     path('new/', NewPerson.as_view(), name='new_person'),
     path('modify/<int:id>', ModifyPersonView.as_view(), name='modify_person_view'),
     path('delete/<int:id>', DeletePerson.as_view(), name='delete_person'),
@@ -31,5 +32,6 @@ urlpatterns = [
     path('delete_address/<int:id>', DeleteAddress.as_view(), name='delete_address'),
     path('delete_phone/<int:id>', DeletePhone.as_view(), name='delete_phone'),
     path('delete_email/<int:id>', DeleteEmail.as_view(), name='delete_email'),
-    path('delete_group/<int:id>', DeleteGroup.as_view(), name='delete_group')
+    path('delete_group/<int:id>', DeleteGroup.as_view(), name='delete_group'),
+    path('remove_from_group/<int:group_id>/<int:person_id>', RemoveFromGroup.as_view(), name='remove_from_group')
 ]
