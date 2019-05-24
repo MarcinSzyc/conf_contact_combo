@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Textarea, TextInput, Select, MultiWidget
+from django.forms import ModelForm, DateInput, Textarea, TextInput, Select, SelectMultiple
 from contact_box.models import Person, Address, Email, PhoneNumber, Group
 from django import forms
 
@@ -54,7 +54,7 @@ class GroupForm(ModelForm):
         model = Group
         widgets = {
             'name': TextInput(attrs={'class': 'form-control mb-2 mr-sm-2'}),
-            'person': Select(attrs={'class': 'form-control mb-2 mr-sm-2'})
+            'person': SelectMultiple(attrs={'class': 'form-control mb-2 mr-sm-2'})
         }
         exclude = []
 
