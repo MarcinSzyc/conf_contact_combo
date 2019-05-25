@@ -1,3 +1,7 @@
+# Foreword
+
+In some measure this application is a testbed of numerous technologies. Its intention was to use widely used frameworks, technologies and conventions. Most importantly it was supposed to be learning platform and area for try/error approach. Main language platform is Python/Django yet application use also JavaScript (JQuery, Bootstrap). Lastly tool features wide range of tests (Unittest, Functional tests) and is hosted on external platform (Heroku).
+
 # Conference Contact Combo
 
 Application gives two User Interfaces. One is responsible for managing Conference Room Reservations, second one handles Contact Box functionality.
